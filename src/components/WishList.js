@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import { nanoid } from 'nanoid';
 import WishItem from './WishItem';
 import styled from "styled-components";
 import Modal from './Modal';
+import ReadOnlyRow from './ReadOnlyRow';
+import EditableRow from './EditableRow';
 
 const Div = styled.div`
   display: flex;
@@ -21,9 +23,6 @@ const Th = styled.th`
   background-color: #eee;
 `
 
-const Td = styled(Th)`
-background-color: transparent;
-`
 
 function WishList() {
   const [list, setList] = useState([]);
@@ -35,7 +34,15 @@ function WishList() {
     memo:''
   })
 
- 
+  const [editFormData, setEditFormData] = useState({
+    name:'',
+    store:'',
+    price:'',
+    shippingFee:'',
+    memo:''
+  })
+
+  const [editListId, setEditListId] = useState(null); 
   
   const handleAddFormChange = (event) => {
     event.preventDefault();
@@ -47,6 +54,18 @@ function WishList() {
     newFormData[fieldName] = fieldValue;
 
     setAddFormData(newFormData);
+  }
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.getAttribute('name');
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...editFormData };
+    newFormData[fieldName] = fieldValue;
+
+    setEditFormData(newFormData);
   }
 
   const handleAddFormSubmit = (event) => {
@@ -65,68 +84,85 @@ function WishList() {
     setList(newWishList)
   }
 
+  const handleEditClick = (e, item) => {
+    e.preventDefault();
+    setEditListId(item.id);
+
+    const formValues = {
+      name: item.name,
+      store: item.store,
+      price: item.price,
+      shippingFee: item.shippingFee,
+      memo: item.memo,
+    }
+
+    setEditFormData(formValues);
+  }
+
   return (
     <>
-    <h2>추가하기</h2>
-    <form onSubmit={handleAddFormSubmit}>
-      <input  
-        required 
-        type="text" 
-        name='name' 
-        placeholder='상품명' 
-        onChange={handleAddFormChange}
-        />
-      <input 
-        required 
-        type="text" 
-        name='store' 
-        placeholder='판매처' 
-        onChange={handleAddFormChange}
-        />
-      <input 
-        required 
-        type="text" 
-        name='price' 
-        placeholder='가격'
-        onChange={handleAddFormChange}
-         />
-      <input 
-        required 
-        type="text" 
-        name='shippingFee' 
-        placeholder='배송비'
-        onChange={handleAddFormChange}
-         />
-      <input 
-        type="text" 
-        name='memo' 
-        placeholder='메모' 
-        onChange={handleAddFormChange}
-        />
-      <input 
-        type="submit" /> 
-    </form>
     <Div>
-      <Table>
-        <thead>
-          <Th>상품명</Th>
-          <Th>판매처</Th>
-          <Th>가격</Th>
-          <Th>배송비</Th>
-          <Th>메모</Th>
-        </thead>
-        <tbody>
-          {list.map((item) => (
+      <h2>추가하기</h2>
+      <form onSubmit={handleAddFormSubmit}>
+        <input  
+          required 
+          type="text" 
+          name='name' 
+          placeholder='상품명' 
+          onChange={handleAddFormChange}
+          />
+        <input 
+          required 
+          type="text" 
+          name='store' 
+          placeholder='판매처' 
+          onChange={handleAddFormChange}
+          />
+        <input 
+          required 
+          type="text" 
+          name='price' 
+          placeholder='가격'
+          onChange={handleAddFormChange}
+          />
+        <input 
+          required 
+          type="text" 
+          name='shippingFee' 
+          placeholder='배송비'
+          onChange={handleAddFormChange}
+          />
+        <input 
+          type="text" 
+          name='memo' 
+          placeholder='메모' 
+          onChange={handleAddFormChange}
+          />
+        <button type="submit">Add</button>
+    </form>
+    
+      <form>
+        <Table>
+          <thead>
             <tr>
-              <Td>{item.name}</Td>
-              <Td>{item.store}</Td>
-              <Td>{item.price} 원</Td>
-              <Td>{item.shippingFee} 원</Td>
-              <Td>{item.memo}</Td>
+              <Th>상품명</Th>
+              <Th>판매처</Th>
+              <Th>가격</Th>
+              <Th>배송비</Th>
+              <Th>메모</Th>
+              <Th>수정 삭제</Th>
             </tr>
-          ))}          
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {list.map((item) => (
+              <Fragment>   
+                {editListId === item.id ? (<EditableRow editFormData = {editFormData} handleAddFormChange = {handleAddFormChange}/> ): (<ReadOnlyRow item={item} handleEditClick = {handleEditClick}/>)}         
+               
+              </Fragment>
+            ))}          
+          </tbody>
+        </Table>
+      </form>
     </Div>
 
       <Modal/>
