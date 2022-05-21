@@ -1,9 +1,11 @@
 import React from 'react'
-import Header from '../components/Header'
+import WishList from '../components/WishList'
 
 function WishListPage() {;
   return (
-    <Header />
+    <>
+    <WishList />
+    </>
   )
 }
 
