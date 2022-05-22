@@ -6,6 +6,8 @@ import Modal from './Modal';
 import ReadOnlyRow from './ReadOnlyRow';
 import EditableRow from './EditableRow';
 
+// ------styled-------
+
 const Div = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,7 +24,7 @@ const Th = styled.th`
   padding: 8px;
   background-color: #eee;
 `
-
+// ------component-------
 
 function WishList() {
   const [list, setList] = useState([]);
@@ -84,6 +86,28 @@ function WishList() {
     setList(newWishList)
   }
 
+  const handleEditFormSubmit = (e) => {
+    e.preventDefault();
+
+    const editedList = {
+      id:editListId,
+      name: editFormData.name,
+      store: editFormData.store,
+      price: editFormData.price,
+      shippingFee: editFormData.shippingFee,
+      memo: editFormData.memo
+    }
+
+    const newList = [...list]
+    
+    const index = list.findIndex((item)=> item.id === editListId);
+
+    newList[index] = editedList;
+
+    setList(newList);
+    setEditListId(null);
+  };
+
   const handleEditClick = (e, item) => {
     e.preventDefault();
     setEditListId(item.id);
@@ -141,7 +165,7 @@ function WishList() {
         <button type="submit">Add</button>
     </form>
     
-      <form>
+      <form onSubmit={handleEditFormSubmit}>
         <Table>
           <thead>
             <tr>
@@ -156,7 +180,15 @@ function WishList() {
           <tbody>
             {list.map((item) => (
               <Fragment>   
-                {editListId === item.id ? (<EditableRow editFormData = {editFormData} handleAddFormChange = {handleAddFormChange}/> ): (<ReadOnlyRow item={item} handleEditClick = {handleEditClick}/>)}         
+                {editListId === item.id ? (
+                <EditableRow 
+                  editFormData = {editFormData} 
+                  handleEditFormChange = {handleEditFormChange}/> 
+                ): (
+                <ReadOnlyRow 
+                  item = {item} 
+                  handleEditClick = {handleEditClick}/>
+                )}         
                
               </Fragment>
             ))}          
