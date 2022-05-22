@@ -9,7 +9,7 @@ const Td = styled.td`
   background-color: transparent;
 `
 
-const ReadOnlyRow = ({item, handleEditClick}) => {
+const ReadOnlyRow = ({item, handleEditClick, handleDeleteClick}) => {
   return (
     <tr>
         <Td>{item.name}</Td>
@@ -17,7 +17,13 @@ const ReadOnlyRow = ({item, handleEditClick}) => {
         <Td>{item.price} 원</Td>
         <Td>{item.shippingFee} 원</Td>
         <Td>{item.memo}</Td>
-        <Td><button type='button' onClick={(e)=> handleEditClick(e, item)}>수정</button></Td>
+        <Td>
+          <button 
+            type='button' 
+            onClick={(e)=> handleEditClick(e, item)}>수정
+            </button>
+          <button type='button' onClick={() => handleDeleteClick(item.id)}>Delete</button>        
+        </Td>
     </tr>
   )
 }

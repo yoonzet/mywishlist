@@ -1,6 +1,6 @@
 import React from 'react'
 
-const EditableRow = ({editFormData, handleEditFormChange}) => {
+const EditableRow = ({editFormData, handleEditFormChange, handleCancelClick}) => {
   return (
     <tr>
         <td>
@@ -10,6 +10,7 @@ const EditableRow = ({editFormData, handleEditFormChange}) => {
                 placeholder='상품명 수정'
                 value={editFormData.name}          
                 onChange={handleEditFormChange}
+
             />
         </td>
         <td>
@@ -54,6 +55,7 @@ const EditableRow = ({editFormData, handleEditFormChange}) => {
         </td>
         <td>
           <button type='submit'>Save</button>  
+          <button type='button' onClick={handleCancelClick}>cancel</button>  
         </td>           
         
     </tr>

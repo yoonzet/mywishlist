@@ -82,7 +82,7 @@ function WishList() {
       memo:addFormData.memo
     };
 
-    const newWishList = [newWishItem];
+    const newWishList = [...list, newWishItem];
     setList(newWishList)
   }
 
@@ -122,6 +122,24 @@ function WishList() {
 
     setEditFormData(formValues);
   }
+
+  // 수정취소버튼 
+  const handleCancelClick = () => {
+    setEditListId(null);
+  }
+ 
+  // 삭제버튼
+  const handleDeleteClick = (listId) => {
+    const newList = [...list];
+
+    const index = list.findIndex((item)=> item.id === listId);
+
+    newList.splice(index, 1);
+
+    setList(newList);
+  } 
+
+  console.log(list)
 
   return (
     <>
@@ -183,11 +201,13 @@ function WishList() {
                 {editListId === item.id ? (
                 <EditableRow 
                   editFormData = {editFormData} 
-                  handleEditFormChange = {handleEditFormChange}/> 
+                  handleEditFormChange = {handleEditFormChange}
+                  handleCancelClick = {handleCancelClick}/> 
                 ): (
                 <ReadOnlyRow 
                   item = {item} 
-                  handleEditClick = {handleEditClick}/>
+                  handleEditClick = {handleEditClick}
+                  handleDeleteClick = {handleDeleteClick}/>
                 )}         
                
               </Fragment>
