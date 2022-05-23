@@ -16,12 +16,12 @@ const ReadOnlyRow = ({image, item, handleEditClick, handleDeleteClick}) => {
   return (
     <tr>
         <Td>
-          <Img src={image} />
+          <Img src={item.img} />
           <Img src={item.imgURL} />
         </Td>
         <Td>{item.name}</Td>
         <Td>{item.store}</Td>
-        <Td>{item.price} 원</Td>
+        <Td>{item.price}원</Td>
         <Td>{item.shippingFee} 원</Td>
         <Td>{item.memo}</Td>
         <Td>

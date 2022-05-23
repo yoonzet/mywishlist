@@ -1,10 +1,12 @@
 import React, { useState, Fragment, useRef } from 'react'
 import { nanoid } from 'nanoid';
+import CurrencyInput from 'react-currency-input-field';
 import WishItem from './WishItem';
 import styled from "styled-components";
 import Modal from './Modal';
 import ReadOnlyRow from './ReadOnlyRow';
 import EditableRow from './EditableRow';
+
 
 // ------styled-------
 
@@ -49,8 +51,6 @@ function WishList() {
     shippingFee:'',
     memo:''
   })
-  console.log(addFormData)
-
 
   const [editListId, setEditListId] = useState(null); 
   
@@ -62,9 +62,7 @@ function WishList() {
 
     const newFormData = {...addFormData};
     newFormData[fieldName] = fieldValue;
-
     setAddFormData(newFormData);
-
     // img올리기
     const reader = new FileReader();
     reader.onload = () => {
@@ -72,7 +70,7 @@ function WishList() {
         setImage(reader.result)
       }
     }
-    reader.readAsDataURL(event.target.files[0])
+    reader.readAsDataURL(event.target.files[0])    
   }
 
   const handleEditFormChange = (event) => {
@@ -80,12 +78,11 @@ function WishList() {
 
     const fieldName = event.target.getAttribute('name');
     const fieldValue = event.target.value;
-
     const newFormData = { ...editFormData };
     newFormData[fieldName] = fieldValue;
 
-    setEditFormData(newFormData);
-
+    setEditFormData(newFormData);  
+    
     // img올리기
     const reader = new FileReader();
     reader.onload = () => {
@@ -94,6 +91,7 @@ function WishList() {
       }
     }
     reader.readAsDataURL(event.target.files[0])
+
   }
 
   const handleAddFormSubmit = (event) => {
@@ -101,7 +99,7 @@ function WishList() {
 
     const newWishItem = {
       id: nanoid(), 
-      img: addFormData.img,
+      img: image,
       imgURL: addFormData.imgURL,
       name: addFormData.name,
       store:addFormData.store,
@@ -121,7 +119,7 @@ function WishList() {
 
     const editedList = {
       id:editListId,
-      img: editFormData.img,
+      img: image,
       imgURL: editFormData.imgURL,
       name: editFormData.name,
       store: editFormData.store,
@@ -145,7 +143,7 @@ function WishList() {
     setEditListId(item.id);
 
     const formValues = {
-      img: item.img,
+      img: image,
       imgURL: item.imgURL,
       name: item.name,
       store: item.store,
@@ -173,7 +171,6 @@ function WishList() {
     setList(newList);
   } 
 
-
   return (
     <>
     <Div>
@@ -192,6 +189,7 @@ function WishList() {
           placeholder='이미지 주소' 
           onChange={handleAddFormChange}
           />
+      
         <input  
           required 
           type="text" 
@@ -206,18 +204,15 @@ function WishList() {
           placeholder='판매처' 
           onChange={handleAddFormChange}
           />
-        <input 
+        <CurrencyInput 
           required 
-          type="text" 
+          suffix="%"
           name='price' 
-          pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
-          data-type="currency"
           placeholder='가격'
           onChange={handleAddFormChange}
           />
-        <input 
+        <CurrencyInput
           required 
-          type="text" 
           name='shippingFee' 
           placeholder='배송비'
           onChange={handleAddFormChange}
