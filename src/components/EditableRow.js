@@ -41,7 +41,7 @@ const EditableRow = ({image, fileInput, editFormData, handleEditFormChange, hand
         </td>
         <td>
             <input 
-                type="text" 
+                type="number" 
                 name="price" 
                 placeholder='가격 수정' 
                 value={editFormData.price}          

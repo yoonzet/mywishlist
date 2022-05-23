@@ -32,6 +32,7 @@ function WishList() {
   const fileInput = useRef(null);
   const [addFormData, setAddFormData] = useState({
     img:'',
+    imgURL:'',
     name:'',
     store:'',
     price:'',
@@ -41,13 +42,14 @@ function WishList() {
 
   const [editFormData, setEditFormData] = useState({
     img:'',
+    imgURL:'',
     name:'',
     store:'',
     price:'',
     shippingFee:'',
     memo:''
   })
-  console.log(editFormData)
+  console.log(addFormData)
 
 
   const [editListId, setEditListId] = useState(null); 
@@ -100,6 +102,7 @@ function WishList() {
     const newWishItem = {
       id: nanoid(), 
       img: addFormData.img,
+      imgURL: addFormData.imgURL,
       name: addFormData.name,
       store:addFormData.store,
       price:addFormData.price,
@@ -119,6 +122,7 @@ function WishList() {
     const editedList = {
       id:editListId,
       img: editFormData.img,
+      imgURL: editFormData.imgURL,
       name: editFormData.name,
       store: editFormData.store,
       price: editFormData.price,
@@ -142,6 +146,7 @@ function WishList() {
 
     const formValues = {
       img: item.img,
+      imgURL: item.imgURL,
       name: item.name,
       store: item.store,
       price: item.price,
@@ -181,6 +186,12 @@ function WishList() {
             onChange={handleAddFormChange}
             ref={fileInput}
             />
+        <input
+          type='text'
+          name='imgURL'
+          placeholder='이미지 주소' 
+          onChange={handleAddFormChange}
+          />
         <input  
           required 
           type="text" 
@@ -199,6 +210,8 @@ function WishList() {
           required 
           type="text" 
           name='price' 
+          pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
+          data-type="currency"
           placeholder='가격'
           onChange={handleAddFormChange}
           />

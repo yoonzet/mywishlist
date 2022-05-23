@@ -9,13 +9,16 @@ const Td = styled.td`
   background-color: transparent;
 `
 const Img = styled.img`
-  width: 300px;
+  width: 150px;
 `
 
 const ReadOnlyRow = ({image, item, handleEditClick, handleDeleteClick}) => {
   return (
     <tr>
-        <Td><Img src={image} alt="" /></Td>
+        <Td>
+          <Img src={image} />
+          <Img src={item.imgURL} />
+        </Td>
         <Td>{item.name}</Td>
         <Td>{item.store}</Td>
         <Td>{item.price} 원</Td>
