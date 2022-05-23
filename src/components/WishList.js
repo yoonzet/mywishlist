@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useRef } from 'react'
 import { nanoid } from 'nanoid';
 import WishItem from './WishItem';
 import styled from "styled-components";
@@ -28,7 +28,10 @@ const Th = styled.th`
 
 function WishList() {
   const [list, setList] = useState([]);
+  const [image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+  const fileInput = useRef(null);
   const [addFormData, setAddFormData] = useState({
+    img:'',
     name:'',
     store:'',
     price:'',
@@ -37,12 +40,15 @@ function WishList() {
   })
 
   const [editFormData, setEditFormData] = useState({
+    img:'',
     name:'',
     store:'',
     price:'',
     shippingFee:'',
     memo:''
   })
+  console.log(editFormData)
+
 
   const [editListId, setEditListId] = useState(null); 
   
@@ -56,6 +62,15 @@ function WishList() {
     newFormData[fieldName] = fieldValue;
 
     setAddFormData(newFormData);
+
+    // img올리기
+    const reader = new FileReader();
+    reader.onload = () => {
+      if(reader.readyState === 2){
+        setImage(reader.result)
+      }
+    }
+    reader.readAsDataURL(event.target.files[0])
   }
 
   const handleEditFormChange = (event) => {
@@ -68,6 +83,15 @@ function WishList() {
     newFormData[fieldName] = fieldValue;
 
     setEditFormData(newFormData);
+
+    // img올리기
+    const reader = new FileReader();
+    reader.onload = () => {
+      if(reader.readyState === 2){
+        setImage(reader.result)
+      }
+    }
+    reader.readAsDataURL(event.target.files[0])
   }
 
   const handleAddFormSubmit = (event) => {
@@ -75,6 +99,7 @@ function WishList() {
 
     const newWishItem = {
       id: nanoid(), 
+      img: addFormData.img,
       name: addFormData.name,
       store:addFormData.store,
       price:addFormData.price,
@@ -82,8 +107,10 @@ function WishList() {
       memo:addFormData.memo
     };
 
+
     const newWishList = [...list, newWishItem];
     setList(newWishList)
+
   }
 
   const handleEditFormSubmit = (e) => {
@@ -91,6 +118,7 @@ function WishList() {
 
     const editedList = {
       id:editListId,
+      img: editFormData.img,
       name: editFormData.name,
       store: editFormData.store,
       price: editFormData.price,
@@ -113,6 +141,7 @@ function WishList() {
     setEditListId(item.id);
 
     const formValues = {
+      img: item.img,
       name: item.name,
       store: item.store,
       price: item.price,
@@ -139,13 +168,19 @@ function WishList() {
     setList(newList);
   } 
 
-  console.log(list)
 
   return (
     <>
     <Div>
       <h2>추가하기</h2>
       <form onSubmit={handleAddFormSubmit}>
+        <input
+            type='file'
+            accept='image/*' //이미지파일만 불러오기
+            name='img' 
+            onChange={handleAddFormChange}
+            ref={fileInput}
+            />
         <input  
           required 
           type="text" 
@@ -187,6 +222,7 @@ function WishList() {
         <Table>
           <thead>
             <tr>
+              <Th>이미지</Th>
               <Th>상품명</Th>
               <Th>판매처</Th>
               <Th>가격</Th>
@@ -200,11 +236,14 @@ function WishList() {
               <Fragment>   
                 {editListId === item.id ? (
                 <EditableRow 
+                  image = {image}
+                  fileInput = {fileInput}
                   editFormData = {editFormData} 
                   handleEditFormChange = {handleEditFormChange}
                   handleCancelClick = {handleCancelClick}/> 
                 ): (
                 <ReadOnlyRow 
+                  image = {image}
                   item = {item} 
                   handleEditClick = {handleEditClick}
                   handleDeleteClick = {handleDeleteClick}/>

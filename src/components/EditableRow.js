@@ -1,8 +1,24 @@
 import React from 'react'
+import styled from 'styled-components';
 
-const EditableRow = ({editFormData, handleEditFormChange, handleCancelClick}) => {
+const Img = styled.img`
+  width: 300px;
+`
+
+const EditableRow = ({image, fileInput, editFormData, handleEditFormChange, handleCancelClick}) => {
   return (
     <tr>
+        <td>
+            <Img src={image} alt="" />
+            <input 
+                type="file" 
+                name="image" 
+                accept='image/*'
+                // value={editFormData.img}          
+                onChange={handleEditFormChange}
+                ref={fileInput}
+            />
+        </td>
         <td>
             <input 
                 type="text" 

@@ -8,10 +8,14 @@ const Td = styled.td`
   padding: 8px;
   background-color: transparent;
 `
+const Img = styled.img`
+  width: 300px;
+`
 
-const ReadOnlyRow = ({item, handleEditClick, handleDeleteClick}) => {
+const ReadOnlyRow = ({image, item, handleEditClick, handleDeleteClick}) => {
   return (
     <tr>
+        <Td><Img src={image} alt="" /></Td>
         <Td>{item.name}</Td>
         <Td>{item.store}</Td>
         <Td>{item.price} 원</Td>
