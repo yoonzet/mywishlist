@@ -4,6 +4,7 @@ import styled from "styled-components";
 import ReadOnlyRow from './ReadOnlyRow';
 import EditableRow from './EditableRow';
 import Modal from './Modal';
+import TotalPrice from './TotalPrice';
 
 
 // ------styled-------
@@ -187,26 +188,29 @@ function WishList() {
   }
 
   //합계 계산
-  const sum = () => {
+ 
     const sumOfPrice = () => {
-      const priceArry = list.map((item) => stringToPrice(item.price))      
-      
+      const priceArry = list.map((item) => stringToPrice(item.price))        
       return priceArry.reduce((acc, cur)=>{
         return acc + cur;
       }, 0)
     }
+
     const sumOfShippingFee = () => {
-      const shippingFeeArry = list.map((item) => stringToPrice(item.shippingFee))   
-          
+      const shippingFeeArry = list.map((item) => stringToPrice(item.shippingFee))           
       return shippingFeeArry.reduce((acc, cur)=>{
         return acc + cur;
       }, 0)
     }
+    
+    const totalPrice = () => sumOfPrice() + sumOfShippingFee()
 
-    return `상품가격 ${sumOfPrice()}원 + 배송비 ${sumOfShippingFee()}원 = 총 금액 ${sumOfPrice() + sumOfShippingFee()}원 `
-  }
-
-  const totalPrice = priceToString(sum())   
+    const sum = {
+      sumOfPrice: sumOfPrice(),
+      sumOfShippingFee: sumOfShippingFee(),
+      totalPrice: totalPrice()
+    }
+  
 
 
   return (
@@ -248,7 +252,9 @@ function WishList() {
           </div>
         
       </form>
-      <p>{totalPrice}</p>
+      <TotalPrice
+        sum = {sum}
+        totalPrice = {totalPrice}/>
     </Div>
     </>
   )

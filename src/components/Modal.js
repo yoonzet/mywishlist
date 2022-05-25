@@ -3,6 +3,7 @@ import { CgSoftwareUpload } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useRef, useState } from "react";
 
+// ------styled-------
 const Bg = styled.div`
     width: 100vw;
     height: 100vh;
@@ -11,7 +12,7 @@ const Bg = styled.div`
     top: 0;
     left: 0;
     opacity: 0.5;
-    transition: 0.5s;
+    transition: 0.6s;
     z-index: 88;
     &.active{
         opacity: 0;
@@ -24,7 +25,7 @@ const AddBarWrap = styled.div`
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
     background-color: #fff;
-    box-shadow:0 0 20px 0px #3333;
+    box-shadow:0 0 20px 0px #3331;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,11 +36,14 @@ const AddBarWrap = styled.div`
     left: 0;
     transform: translateY(-50%) rotate(0deg);
     z-index: 99;
-    transition: 0.8s;
+    transition: 0.6s;
     &.active{
-        transform: translate(-110%, -50%) rotate(45deg);
-        /* transform: rotate(-90deg); */
+        border-top-right-radius: 500px;
+        transform: translate(-112%, -50%) rotate(45deg);
     }
+    /* &.active:hover{
+        transform: translate(-110%, -50%) rotate(45deg);
+    } */
 `
 const CloseBtn = styled.div`
     position: absolute;
@@ -47,8 +51,11 @@ const CloseBtn = styled.div`
     right: 30px;
     font-size: 30px;
     cursor: pointer;
-    transition: 0.8s;
+    transition: 0.6s;
     &.active{
+        transform: scale(1.4);
+    }
+    &:hover{
         transform: scale(1.2);
     }
 `
@@ -126,6 +133,7 @@ const AddBtn = styled.button`
     margin: 0 auto;
     margin-top: 20px;
 `
+// ------component-------
 
 const  Modal = ({item, image, handleAddFormSubmit, handleAddFormChange, fileInput}) => {
     const [addBar, setAddBar] = useState(true);
@@ -171,7 +179,7 @@ const  Modal = ({item, image, handleAddFormSubmit, handleAddFormChange, fileInpu
 
             <FlexWrap>
                 <InputWrap>
-                    <P>상품명*</P>
+                    <P>상품명 <span style={{color:'orangered'}}>*</span> </P> 
                     <InputHalf  
                     required 
                     type="text" 
@@ -181,7 +189,7 @@ const  Modal = ({item, image, handleAddFormSubmit, handleAddFormChange, fileInpu
                     />
                 </InputWrap>
                 <InputWrap>                
-                    <P>판매처*</P>
+                    <P>판매처 <span style={{color:'orangered'}}>*</span> </P>
                     <InputHalf 
                     required 
                     type="text" 
@@ -203,7 +211,7 @@ const  Modal = ({item, image, handleAddFormSubmit, handleAddFormChange, fileInpu
                 </InputWrap>
             <FlexWrap>
                 <InputWrap>
-                    <P>가격*</P>
+                    <P>가격 <span style={{color:'orangered'}}>*</span> </P>
                     <InputHalf 
                     required 
                     type="number" 
@@ -213,7 +221,7 @@ const  Modal = ({item, image, handleAddFormSubmit, handleAddFormChange, fileInpu
                     />
                 </InputWrap>
                 <InputWrap>
-                <P>배송비*</P>
+                <P>배송비 <span style={{color:'orangered'}}>*</span> </P>
                     <InputHalf 
                         required 
                         type="number" 
