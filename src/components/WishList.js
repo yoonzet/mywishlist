@@ -1,11 +1,9 @@
 import React, { useState, Fragment, useRef } from 'react'
 import { nanoid } from 'nanoid';
-import CurrencyInput from 'react-currency-input-field';
-import WishItem from './WishItem';
 import styled from "styled-components";
-import Modal from './Modal';
 import ReadOnlyRow from './ReadOnlyRow';
 import EditableRow from './EditableRow';
+import Modal from './Modal';
 
 
 // ------styled-------
@@ -29,15 +27,25 @@ const Th = styled.th`
 // ------component-------
 
 function WishList() {
+    // 천단위 콤마찍기(string타입)
+    function priceToString(price) {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+    // 천단위 콤마없애기(number로 변환)
+    function stringToPrice(str) {
+      return Number(str.replace(/,/g, ""));
+  }
+  
   const [list, setList] = useState([]);
-  const [image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+  const [image, setImage] = useState("https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg");
   const fileInput = useRef(null);
   const [addFormData, setAddFormData] = useState({
     img:'',
     imgURL:'',
     name:'',
     store:'',
-    price:'',
+    storeLink:'',
+    price:priceToString(''),
     shippingFee:'',
     memo:''
   })
@@ -47,12 +55,15 @@ function WishList() {
     imgURL:'',
     name:'',
     store:'',
+    storeLink:'',
     price:'',
     shippingFee:'',
     memo:''
   })
 
   const [editListId, setEditListId] = useState(null); 
+
+
   
   const handleAddFormChange = (event) => {
     event.preventDefault();
@@ -62,8 +73,9 @@ function WishList() {
 
     const newFormData = {...addFormData};
     newFormData[fieldName] = fieldValue;
+    newFormData[fieldName] = fieldValue;
     setAddFormData(newFormData);
-    // img올리기
+        // img올리기
     const reader = new FileReader();
     reader.onload = () => {
       if(reader.readyState === 2){
@@ -103,8 +115,9 @@ function WishList() {
       imgURL: addFormData.imgURL,
       name: addFormData.name,
       store:addFormData.store,
-      price:addFormData.price,
-      shippingFee:addFormData.shippingFee,
+      storeLink:addFormData.storeLink,
+      price:priceToString(addFormData.price),
+      shippingFee:priceToString(addFormData.shippingFee),
       memo:addFormData.memo
     };
 
@@ -123,8 +136,9 @@ function WishList() {
       imgURL: editFormData.imgURL,
       name: editFormData.name,
       store: editFormData.store,
-      price: editFormData.price,
-      shippingFee: editFormData.shippingFee,
+      storeLink: editFormData.storeLink,
+      price: priceToString(editFormData.price),
+      shippingFee: priceToString(editFormData.shippingFee),
       memo: editFormData.memo
     }
 
@@ -147,6 +161,7 @@ function WishList() {
       imgURL: item.imgURL,
       name: item.name,
       store: item.store,
+      storeLink: item.storeLink,
       price: item.price,
       shippingFee: item.shippingFee,
       memo: item.memo,
@@ -169,82 +184,50 @@ function WishList() {
     newList.splice(index, 1);
 
     setList(newList);
-  } 
+  }
+
+  //합계 계산
+  const sum = () => {
+    const sumOfPrice = () => {
+      const priceArry = list.map((item) => stringToPrice(item.price))      
+      
+      return priceArry.reduce((acc, cur)=>{
+        return acc + cur;
+      }, 0)
+    }
+    const sumOfShippingFee = () => {
+      const shippingFeeArry = list.map((item) => stringToPrice(item.shippingFee))   
+          
+      return shippingFeeArry.reduce((acc, cur)=>{
+        return acc + cur;
+      }, 0)
+    }
+
+    return `상품가격 ${sumOfPrice()}원 + 배송비 ${sumOfShippingFee()}원 = 총 금액 ${sumOfPrice() + sumOfShippingFee()}원 `
+  }
+
+  const totalPrice = priceToString(sum())   
+
 
   return (
     <>
     <Div>
-      <h2>추가하기</h2>
-      <form onSubmit={handleAddFormSubmit}>
-        <input
-            type='file'
-            accept='image/*' //이미지파일만 불러오기
-            name='img' 
-            onChange={handleAddFormChange}
-            ref={fileInput}
-            />
-        <input
-          type='text'
-          name='imgURL'
-          placeholder='이미지 주소' 
-          onChange={handleAddFormChange}
-          />
-      
-        <input  
-          required 
-          type="text" 
-          name='name' 
-          placeholder='상품명' 
-          onChange={handleAddFormChange}
-          />
-        <input 
-          required 
-          type="text" 
-          name='store' 
-          placeholder='판매처' 
-          onChange={handleAddFormChange}
-          />
-        <CurrencyInput 
-          required 
-          suffix="%"
-          name='price' 
-          placeholder='가격'
-          onChange={handleAddFormChange}
-          />
-        <CurrencyInput
-          required 
-          name='shippingFee' 
-          placeholder='배송비'
-          onChange={handleAddFormChange}
-          />
-        <input 
-          type="text" 
-          name='memo' 
-          placeholder='메모' 
-          onChange={handleAddFormChange}
-          />
-        <button type="submit">Add</button>
-    </form>
-    
+        <Modal
+        handleAddFormSubmit = {handleAddFormSubmit}
+        handleAddFormChange = {handleAddFormChange}
+        fileInput = {fileInput}
+        image = {image}
+        // item = {item}
+        />
+
       <form onSubmit={handleEditFormSubmit}>
-        <Table>
-          <thead>
-            <tr>
-              <Th>이미지</Th>
-              <Th>상품명</Th>
-              <Th>판매처</Th>
-              <Th>가격</Th>
-              <Th>배송비</Th>
-              <Th>메모</Th>
-              <Th>수정 삭제</Th>
-            </tr>
-          </thead>
-          <tbody>
+          <div>
             {list.map((item) => (
-              <Fragment>   
+              <>   
                 {editListId === item.id ? (
                 <EditableRow 
                   image = {image}
+                  item = {item} 
                   fileInput = {fileInput}
                   editFormData = {editFormData} 
                   handleEditFormChange = {handleEditFormChange}
@@ -254,19 +237,19 @@ function WishList() {
                   image = {image}
                   item = {item} 
                   handleEditClick = {handleEditClick}
-                  handleDeleteClick = {handleDeleteClick}/>
+                  handleDeleteClick = {handleDeleteClick}
+                  priceToString = {priceToString}
+                  stringToPrice = {stringToPrice}/>
+                  
                 )}         
                
-              </Fragment>
+              </>
             ))}          
-          </tbody>
-        </Table>
+          </div>
+        
       </form>
+      <p>{totalPrice}</p>
     </Div>
-
-      <Modal/>
-      <WishItem/>
-
     </>
   )
 }

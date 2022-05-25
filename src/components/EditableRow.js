@@ -1,15 +1,15 @@
-import React from 'react'
-import CurrencyInput from 'react-currency-input-field';
 import styled from 'styled-components';
 
+const Div = styled.div`
+`
 const Img = styled.img`
   width: 100px;
 `
 
 const EditableRow = ({image, fileInput, editFormData, handleEditFormChange, handleCancelClick}) => {
   return (
-    <tr>
-        <td>
+    <Div>
+        <thumbnailWarp>
             <Img 
                 src={image}
                 name="img" 
@@ -31,8 +31,8 @@ const EditableRow = ({image, fileInput, editFormData, handleEditFormChange, hand
                 value={editFormData.imgURL}          
                 onChange={handleEditFormChange}
             />
-        </td>
-        <td>
+        </thumbnailWarp>
+        <storeWarp>
             <input 
                 type="text" 
                 name="name" 
@@ -41,7 +41,7 @@ const EditableRow = ({image, fileInput, editFormData, handleEditFormChange, hand
                 onChange={handleEditFormChange}
 
             />
-        </td>
+        </storeWarp>
         <td>
             <input 
                 type="text" 
@@ -49,27 +49,30 @@ const EditableRow = ({image, fileInput, editFormData, handleEditFormChange, hand
                 placeholder='판매처 수정'      
                 value={editFormData.store}          
                 onChange={handleEditFormChange}
-
+            />
+            <input 
+                type="text" 
+                name="storeLink" 
+                placeholder='판매처링크 수정'      
+                value={editFormData.storeLink}          
+                onChange={handleEditFormChange}
             />
         </td>
-        <td>
+        <priceWrap>
             <input 
                 name="price" 
                 placeholder='가격 수정' 
                 value={editFormData.price}          
                 onChange={handleEditFormChange}
-
-            />
-        </td>
-        <td>
+            />       
             <input  
                 name="shippingFee" 
                 placeholder='배송비 수정'                          
                 value={editFormData.shippingFee}          
                 onChange={handleEditFormChange}
             />
-        </td>
-        <td>
+        </priceWrap>
+        <memoWrap>
             <input 
                 type="text" 
                 name="memo" 
@@ -78,13 +81,12 @@ const EditableRow = ({image, fileInput, editFormData, handleEditFormChange, hand
                 onChange={handleEditFormChange}
 
             />
-        </td>
+        </memoWrap>
         <td>
           <button type='submit'>Save</button>  
           <button type='button' onClick={handleCancelClick}>cancel</button>  
-        </td>           
-        
-    </tr>
+        </td>          
+    </Div>
   )
 }
 
