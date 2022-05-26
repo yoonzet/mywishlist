@@ -1,4 +1,5 @@
 import styled  from "styled-components";
+import { motion, AnimatePresence } from 'framer-motion';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { MdOutlineModeEditOutline } from 
 "react-icons/md";
@@ -109,7 +110,7 @@ const ReadOnlyRow = ({priceToString, stringToPrice, item, handleEditClick, handl
           <Store>{item.store}</Store>
           {item.storeLink === '' ?         
          (<Name>{item.name}</Name>) :
-        (<Name><ATag href={item.storeLink}>{item.name}<IoOpenOutline/></ATag></Name>)
+        (<Name><ATag href={item.storeLink}>{item.name} <IoOpenOutline/></ATag></Name>)
         }
         </StoreWrap>
         <MemoWrap>{item.memo}</MemoWrap>

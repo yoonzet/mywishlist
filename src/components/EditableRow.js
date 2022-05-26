@@ -90,7 +90,8 @@ const EditableRow = ({imgFormChange, fileInput, editFormData, handleEditFormChan
                 onChange={handleEditFormChange}
                 ref={fileInput} /> */}
             <Label>
-                <label htmlFor="files">  
+                <label 
+                htmlFor="files"                                >  
                    <CgSoftwareUpload/>
                 </label>  
             </Label>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { CgSoftwareUpload } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 // ------styled-------
 const Bg = styled.div`
@@ -44,6 +44,11 @@ const AddBarWrap = styled.div`
         border-top-right-radius: 50px;
 
         transform: translate(-110%, -50%) rotate(45deg);
+    }
+    &.hi{
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(0deg);
     }
 `
 const CloseBtn = styled.div`
@@ -88,11 +93,6 @@ const InputFile = styled.input`
         display: none;
     }
 `
-const Img = styled.img`
-    width: 100px; 
-    max-height:200px ;
-    border-radius: 10px;
-`
 const P = styled.p`
     text-align : left ;
     line-height: 10px;
@@ -136,18 +136,21 @@ const AddBtn = styled.button`
 `
 // ------component-------
 
-const  Modal = ({imgFormChange, item, image, handleAddFormSubmit, handleAddFormChange, fileInput}) => {
+const  Modal = ({list, imgFormChange, handleAddFormSubmit, handleAddFormChange, fileInput}) => {
     const [addBar, setAddBar] = useState(false);
-    const ClickShowAddBar = () => setAddBar(!addBar);
-    
+    const ClickShowAddBar = () => setAddBar(!addBar);  
+
+
   return (  
-      <>    
-        <Bg className={addBar ? '' : 'active'}></Bg>
-        <AddBarWrap className={addBar ? '' : 'active'}>
-    
-        <CloseBtn onClick={ClickShowAddBar} className={addBar ? '' : 'active'}>
+      <>  
+        <Bg className={list.length === 0 || addBar ? '' : 'active'}></Bg>
+        <AddBarWrap className={list.length === 0 ? 'hi' : '' || addBar ? '' : 'active'}>
+        {list.length === 0 ? '' :
+        <CloseBtn 
+            onClick={ClickShowAddBar}  
+            className={addBar ? '' : 'active'}>
             <IoCloseCircleOutline/>
-        </CloseBtn>
+        </CloseBtn>}
         <h2>추가하기</h2>
 
         <form onSubmit={handleAddFormSubmit}>

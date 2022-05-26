@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useRef } from 'react'
 import { nanoid } from 'nanoid';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import styled from "styled-components";
 import ReadOnlyRow from './ReadOnlyRow';
 import EditableRow from './EditableRow';
@@ -90,6 +90,7 @@ function WishList() {
 
     const newFormData = {...addFormData};
     newFormData[fieldName] = fieldValue;
+
     setAddFormData(newFormData);
   }
 
@@ -98,6 +99,7 @@ function WishList() {
 
     const fieldName = event.target.getAttribute('name');
     const fieldValue = event.target.value;
+
     const newFormData = { ...editFormData };
     newFormData[fieldName] = fieldValue;
 
@@ -121,7 +123,7 @@ function WishList() {
 
 
     const newList = [newWishItem, ...list,];
-    setList(newList)  
+    setList(newList) 
 
   }
 
@@ -142,7 +144,7 @@ function WishList() {
 
     const newList = [...list]
     
-    const index = list.findIndex((item)=> item.id === editListId);
+    const index = list.findIndex((item) => item.id === editListId);
 
     newList[index] = editedList;
 
@@ -209,7 +211,6 @@ function WishList() {
       totalPrice: priceToString(totalPrice())
     } 
 
-
   return (
     <>
     <Header>My Wish List</Header>
@@ -220,18 +221,26 @@ function WishList() {
         handleAddFormSubmit = {handleAddFormSubmit}
         handleAddFormChange = {handleAddFormChange}
         fileInput = {fileInput}
-        image = {image}
-        // item = {item}
+        list = {list}
         />
 
         
           <form onSubmit={handleEditFormSubmit}>
               <div>
-             
+              <motion.div 
+                      // initial={{opacity:0,scale:1}}
+                      // animate={{opacity:1,scale:1 }}
+                      // exit={{opacity:0,scale:0}}
+                      // transition={{ duration:1}}
+                      // layout
+                      >
+                  <AnimatePresence>            
                 {list.map((item) => (
-                  <>   
-                    {editListId === item.id ? (
-                    <EditableRow 
+                  <>                        
+                    {editListId === item.id ? 
+                    
+                    (               <EditableRow 
+                      key={item.id}
                       image = {image}
                       item = {item} 
                       fileInput = {fileInput}
@@ -239,27 +248,21 @@ function WishList() {
                       handleEditFormChange = {handleEditFormChange}
                       handleCancelClick = {handleCancelClick}/> 
                     ): (
-                      <motion.div 
-                      initial={{opacity:0,scale:1}}
-                      animate={{opacity:1,scale:1 }}
-                      exit={{opacity:0,scale:0}}
-                      transition={{ duration:1}}
-                      // layout
-                      >
-                         <AnimatePresence>
+                   
                     <ReadOnlyRow 
+                      key={item.id}
                       image = {image}
                       item = {item} 
                       handleEditClick = {handleEditClick}
                       handleDeleteClick = {handleDeleteClick}
                       priceToString = {priceToString}
                       stringToPrice = {stringToPrice}/>
-                      </AnimatePresence>
-      </motion.div> 
-                    )}         
+                      )}         
                   
                   </>
                 ))} 
+                 </AnimatePresence>   
+           </motion.div> 
                         
               </div>            
           </form>
