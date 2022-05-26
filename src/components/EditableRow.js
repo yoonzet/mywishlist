@@ -6,7 +6,6 @@ import { CgSoftwareUpload } from "react-icons/cg";
 // ------styled-------
 
 const Div = styled.div`
-  width: 55vw;
   min-width: 800px;
   height: 180px;
   background-color: #fff;
@@ -47,6 +46,7 @@ const Label = styled.div`
 const InputFile = styled.input`
     width: 90px;
     margin-bottom: 20px;
+    cursor: pointer;
     &::file-selector-button{
         display: none;
     }
@@ -79,7 +79,7 @@ const Button = styled.button`
 
 // ------component-------
 
-const EditableRow = ({image, fileInput, editFormData, handleEditFormChange, handleCancelClick}) => {
+const EditableRow = ({imgFormChange, fileInput, editFormData, handleEditFormChange, handleCancelClick}) => {
   return (
     <Div>
         <ImgWrap>
@@ -90,14 +90,16 @@ const EditableRow = ({image, fileInput, editFormData, handleEditFormChange, hand
                 onChange={handleEditFormChange}
                 ref={fileInput} /> */}
             <Label>
-                <label for="files" style={{cursor:'pointer'}}> <CgSoftwareUpload/></label>  
+                <label htmlFor="files">  
+                   <CgSoftwareUpload/>
+                </label>  
             </Label>
             <InputFile 
+                id='files'
                 type="file" 
                 name="img" 
-                accept='image/*'
-                // value={editFormData.img}          
-                onChange={handleEditFormChange}
+                accept='image/*'         
+                onChange={imgFormChange}
                 ref={fileInput}
             />
             <Input

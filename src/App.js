@@ -1,11 +1,9 @@
-import Header from './components/Header';
-import WishListPage from './pages/WishListPage';
+import WishList from './components/WishList';
 
 function App() {
   return (
     <div className="App">
-       <Header />
-      <WishListPage/>
+      <WishList/>
     </div>
   );
 }

@@ -8,7 +8,7 @@ const Bg = styled.div`
     width: 100vw;
     height: 100vh;
     background-color: #333;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     opacity: 0.5;
@@ -31,7 +31,7 @@ const AddBarWrap = styled.div`
     align-items: center;
     flex-direction: column;
     margin: 0 auto;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 0;
     transform: translateY(-50%) rotate(0deg);
@@ -135,7 +135,7 @@ const AddBtn = styled.button`
 `
 // ------component-------
 
-const  Modal = ({item, image, handleAddFormSubmit, handleAddFormChange, fileInput}) => {
+const  Modal = ({imgFormChange, item, image, handleAddFormSubmit, handleAddFormChange, fileInput}) => {
     const [addBar, setAddBar] = useState(true);
     const ClickShowAddBar = () => setAddBar(!addBar);
     
@@ -156,7 +156,7 @@ const  Modal = ({item, image, handleAddFormSubmit, handleAddFormChange, fileInpu
                 {/* <Img src={item.imgURL} alt="" />  */}
                 <>
                     <Label>
-                        <label for="files" style={{cursor:'pointer'}}> <CgSoftwareUpload/></label>  
+                        <label htmlFor="files"> <CgSoftwareUpload/></label>  
                     </Label>
                     <InputFile
                         id="files"
@@ -164,7 +164,7 @@ const  Modal = ({item, image, handleAddFormSubmit, handleAddFormChange, fileInpu
                         accept='image/*' //이미지파일만 불러오기
                         name='img'
                         // style={{display:'none'}} 
-                        onChange={handleAddFormChange}
+                        onChange={imgFormChange}
                         ref={fileInput}
                         />
                 </>

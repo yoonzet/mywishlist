@@ -3,10 +3,19 @@ import styled from "styled-components";
 // ------styled-------
 
 const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 1rem;
+    width: 500px;
+    height: 350px;
+    background-color: #fff;
+    padding: 30px;
+    box-sizing: border-box;
+    margin: 0 0 30px auto;
+`
+const TxtWrap = styled.div`
+    width: 300px;
+    margin: 30px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `
 
 
@@ -15,11 +24,23 @@ const Div = styled.div`
 const TotalPrice = ({sum}) => {
   return (
       <>
-      <div>
-        <p>{sum.sumOfPrice}</p>
-        <p>{sum.sumOfShippingFee}</p>
-        <p>{sum.totalPrice}</p>
-      </div>
+      <Div>
+          <h2>TOTAL</h2>
+          <TxtWrap>
+            <span>상품가격</span>
+            <span>{sum.sumOfPrice} 원</span>
+          </TxtWrap>
+          <TxtWrap>
+            <span>배송비</span>
+            <span>{sum.sumOfShippingFee} 원</span>
+          </TxtWrap>
+          <hr/>
+          <TxtWrap>
+            <span>총 금액</span>
+            <h1>{sum.totalPrice} 원</h1>
+          </TxtWrap>
+
+      </Div>
        
       </>
   )

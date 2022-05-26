@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useRef } from 'react'
 import { nanoid } from 'nanoid';
+import { motion, AnimatePresence } from 'framer-motion';
 import styled from "styled-components";
 import ReadOnlyRow from './ReadOnlyRow';
 import EditableRow from './EditableRow';
@@ -7,23 +8,18 @@ import Modal from './Modal';
 import TotalPrice from './TotalPrice';
 
 
+
 // ------styled-------
 
+const Header = styled.h1`
+  text-align: center;
+  margin-top: 50px;
+`
 const Div = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 1rem;
-`
-const Table = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-`
-const Th = styled.th`
-  border: 1px solid #ffffff;
-  text-align: left;
-  padding: 8px;
-  background-color: #eee;
+  padding: 0 20vw;
 `
 // ------component-------
 
@@ -64,6 +60,23 @@ function WishList() {
 
   const [editListId, setEditListId] = useState(null); 
 
+  // 이미지 올리기
+  const imgFormChange = (e) => {
+    let reader = new FileReader()
+  
+    if(e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0])
+    }
+  
+    reader.onloadend = () => {
+      const previewImgUrl = reader.result
+  
+      if(previewImgUrl) {
+        setImage(previewImgUrl)
+      }
+    }
+
+  }
 
   
   const handleAddFormChange = (event) => {
@@ -74,16 +87,7 @@ function WishList() {
 
     const newFormData = {...addFormData};
     newFormData[fieldName] = fieldValue;
-    newFormData[fieldName] = fieldValue;
     setAddFormData(newFormData);
-        // img올리기
-    const reader = new FileReader();
-    reader.onload = () => {
-      if(reader.readyState === 2){
-        setImage(reader.result)
-      }
-    }
-    reader.readAsDataURL(event.target.files[0])    
   }
 
   const handleEditFormChange = (event) => {
@@ -94,17 +98,7 @@ function WishList() {
     const newFormData = { ...editFormData };
     newFormData[fieldName] = fieldValue;
 
-    setEditFormData(newFormData);  
-    
-    // img올리기
-    const reader = new FileReader();
-    reader.onload = () => {
-      if(reader.readyState === 2){
-        setImage(reader.result)
-      }
-    }
-    reader.readAsDataURL(event.target.files[0])
-
+    setEditFormData(newFormData);
   }
 
   const handleAddFormSubmit = (event) => {
@@ -123,8 +117,8 @@ function WishList() {
     };
 
 
-    const newWishList = [...list, newWishItem];
-    setList(newWishList)
+    const newList = [newWishItem, ...list,];
+    setList(newList)  
 
   }
 
@@ -187,6 +181,12 @@ function WishList() {
     setList(newList);
   }
 
+  // 리셋
+  const clickReset = () => {
+    setAddFormData('')
+    console.log('kk')
+  }
+
   //합계 계산
  
     const sumOfPrice = () => {
@@ -206,55 +206,70 @@ function WishList() {
     const totalPrice = () => sumOfPrice() + sumOfShippingFee()
 
     const sum = {
-      sumOfPrice: sumOfPrice(),
-      sumOfShippingFee: sumOfShippingFee(),
-      totalPrice: totalPrice()
-    }
-  
+      sumOfPrice: priceToString(sumOfPrice()),
+      sumOfShippingFee: priceToString(sumOfShippingFee()),
+      totalPrice: priceToString(totalPrice())
+    } 
 
 
   return (
     <>
+    <Header>My Wish List</Header>
+
     <Div>
         <Modal
+        imgFormChange = {imgFormChange}
         handleAddFormSubmit = {handleAddFormSubmit}
         handleAddFormChange = {handleAddFormChange}
+        clickReset={clickReset}
         fileInput = {fileInput}
         image = {image}
         // item = {item}
         />
 
-      <form onSubmit={handleEditFormSubmit}>
-          <div>
-            {list.map((item) => (
-              <>   
-                {editListId === item.id ? (
-                <EditableRow 
-                  image = {image}
-                  item = {item} 
-                  fileInput = {fileInput}
-                  editFormData = {editFormData} 
-                  handleEditFormChange = {handleEditFormChange}
-                  handleCancelClick = {handleCancelClick}/> 
-                ): (
-                <ReadOnlyRow 
-                  image = {image}
-                  item = {item} 
-                  handleEditClick = {handleEditClick}
-                  handleDeleteClick = {handleDeleteClick}
-                  priceToString = {priceToString}
-                  stringToPrice = {stringToPrice}/>
-                  
-                )}         
-               
-              </>
-            ))}          
-          </div>
         
-      </form>
-      <TotalPrice
+          <form onSubmit={handleEditFormSubmit}>
+              <div>
+             
+                {list.map((item) => (
+                  <>   
+                    {editListId === item.id ? (
+                    <EditableRow 
+                      image = {image}
+                      item = {item} 
+                      fileInput = {fileInput}
+                      editFormData = {editFormData} 
+                      handleEditFormChange = {handleEditFormChange}
+                      handleCancelClick = {handleCancelClick}/> 
+                    ): (
+                      <motion.div 
+                      initial={{opacity:0,scale:1}}
+                      animate={{opacity:1,scale:1 }}
+                      exit={{opacity:0,scale:0}}
+                      transition={{ duration:1}}
+                      // layout
+                      >
+                         <AnimatePresence>
+                    <ReadOnlyRow 
+                      image = {image}
+                      item = {item} 
+                      handleEditClick = {handleEditClick}
+                      handleDeleteClick = {handleDeleteClick}
+                      priceToString = {priceToString}
+                      stringToPrice = {stringToPrice}/>
+                      </AnimatePresence>
+      </motion.div> 
+                    )}         
+                  
+                  </>
+                ))} 
+                        
+              </div>            
+          </form>
+       {list.length === 0 ? '' : <TotalPrice
         sum = {sum}
-        totalPrice = {totalPrice}/>
+        totalPrice = {totalPrice}/>} 
+      
     </Div>
     </>
   )

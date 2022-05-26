@@ -6,7 +6,6 @@ import { MdOutlineModeEditOutline } from "react-icons/md";
 // ------styled-------
 
 const Div = styled.div`
-  width: 55vw;
   min-width: 800px;
   background-color: #fff;
   box-shadow:0 0 20px 0px #3331;
@@ -91,6 +90,7 @@ const ReadOnlyRow = ({priceToString, stringToPrice, item, handleEditClick, handl
   const totalPrice = priceToString(sum())  
 
   return (
+    
     <Div>
         <ImgWrap>
            {item.imgURL === '' ? 
