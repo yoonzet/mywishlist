@@ -1,10 +1,13 @@
+import { RecoilRoot } from 'recoil';
 import WishList from './components/WishList';
 
 function App() {
   return (
-    <div className="App">
-      <WishList/>
-    </div>
+    <RecoilRoot> 
+      <div className="App">
+        <WishList/>
+      </div>
+    </RecoilRoot>
   );
 }
 

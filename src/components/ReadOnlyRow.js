@@ -1,6 +1,8 @@
 import styled  from "styled-components";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { MdOutlineModeEditOutline } from "react-icons/md";
+import { MdOutlineModeEditOutline } from 
+"react-icons/md";
+import { IoOpenOutline } from "react-icons/io5";
 
 
 // ------styled-------
@@ -36,6 +38,10 @@ const Name = styled.div`
   font-weight: bold;
   margin: 20% 0;
   color: #111;
+`
+const ATag = styled.a`
+  all: unset;
+  cursor: pointer;
 `
 const MemoWrap = styled.div`  
   margin-right: 10px;
@@ -103,7 +109,7 @@ const ReadOnlyRow = ({priceToString, stringToPrice, item, handleEditClick, handl
           <Store>{item.store}</Store>
           {item.storeLink === '' ?         
          (<Name>{item.name}</Name>) :
-        (<Name><a href={item.storeLink}>{item.name}</a></Name>)
+        (<Name><ATag href={item.storeLink}>{item.name}<IoOpenOutline/></ATag></Name>)
         }
         </StoreWrap>
         <MemoWrap>{item.memo}</MemoWrap>

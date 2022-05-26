@@ -22,8 +22,7 @@ const Bg = styled.div`
 const AddBarWrap = styled.div`
     width: 550px;
     height: 700px; 
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
+    border-radius: 50px;
     background-color: #fff;
     box-shadow:0 0 20px 0px #3331;
     display: flex;
@@ -33,7 +32,7 @@ const AddBarWrap = styled.div`
     margin: 0 auto;
     position: fixed;
     top: 50%;
-    left: 0;
+    left: 20px;
     transform: translateY(-50%) rotate(0deg);
     z-index: 99;
     transition: 0.6s;
@@ -41,9 +40,11 @@ const AddBarWrap = styled.div`
         border-top-right-radius: 500px;
         transform: translate(-112%, -50%) rotate(45deg);
     }
-    /* &.active:hover{
+    &.active:hover{
+        border-top-right-radius: 50px;
+
         transform: translate(-110%, -50%) rotate(45deg);
-    } */
+    }
 `
 const CloseBtn = styled.div`
     position: absolute;
@@ -136,7 +137,7 @@ const AddBtn = styled.button`
 // ------component-------
 
 const  Modal = ({imgFormChange, item, image, handleAddFormSubmit, handleAddFormChange, fileInput}) => {
-    const [addBar, setAddBar] = useState(true);
+    const [addBar, setAddBar] = useState(false);
     const ClickShowAddBar = () => setAddBar(!addBar);
     
   return (  
@@ -236,7 +237,7 @@ const  Modal = ({imgFormChange, item, image, handleAddFormSubmit, handleAddFormC
                  <Input 
                     type="text" 
                     name='memo' 
-                    placeholder='메모' 
+                    placeholder='메모(선택)' 
                     onChange={handleAddFormChange}
                  />
             </InputWrap>

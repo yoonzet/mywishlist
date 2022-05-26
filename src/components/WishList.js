@@ -6,6 +6,8 @@ import ReadOnlyRow from './ReadOnlyRow';
 import EditableRow from './EditableRow';
 import Modal from './Modal';
 import TotalPrice from './TotalPrice';
+import { useRecoilState } from 'recoil';
+import { listState } from '../Atom';
 
 
 
@@ -33,7 +35,8 @@ function WishList() {
       return Number(str.replace(/,/g, ""));
   }
   
-  const [list, setList] = useState([]);
+  // const [list, setList] = useState([]);
+  const [list, setList] = useRecoilState(listState);
   const [image, setImage] = useState("https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg");
   const fileInput = useRef(null);
   const [addFormData, setAddFormData] = useState({
@@ -181,11 +184,6 @@ function WishList() {
     setList(newList);
   }
 
-  // 리셋
-  const clickReset = () => {
-    setAddFormData('')
-    console.log('kk')
-  }
 
   //합계 계산
  
@@ -221,7 +219,6 @@ function WishList() {
         imgFormChange = {imgFormChange}
         handleAddFormSubmit = {handleAddFormSubmit}
         handleAddFormChange = {handleAddFormChange}
-        clickReset={clickReset}
         fileInput = {fileInput}
         image = {image}
         // item = {item}
