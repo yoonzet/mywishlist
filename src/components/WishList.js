@@ -45,7 +45,7 @@ function WishList() {
     name:'',
     store:'',
     storeLink:'',
-    price:priceToString(''),
+    price:'',
     shippingFee:'',
     memo:''
   })
@@ -91,8 +91,6 @@ function WishList() {
     const newFormData = {...addFormData};
     newFormData[fieldName] = fieldValue;
 
-    priceToString(addFormData.price)
-
     setAddFormData(newFormData);
   }
 
@@ -109,7 +107,7 @@ function WishList() {
   }
 
   const handleAddFormSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     const newWishItem = {
       id: nanoid(), 

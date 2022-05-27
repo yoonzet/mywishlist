@@ -150,6 +150,10 @@ const AddBtn = styled.button`
     text-align: center;
     margin: 0 auto;
     margin-top: 20px;
+    &:hover{
+        background-color: #eee;
+        transform: scale(0.98);
+    }
 `
 // ------component-------
 
@@ -201,7 +205,7 @@ const  Modal = ({list, imgFormChange, handleAddFormSubmit, handleAddFormChange, 
             <FlexWrap>
                 <InputWrap>
                     <P>상품명 <span style={{color:'orangered'}}>*</span> </P> 
-                    <InputHalf  
+                    <InputHalf 
                     required 
                     type="text" 
                     name='name' 
