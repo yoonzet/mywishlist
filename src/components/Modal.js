@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { CgSoftwareUpload } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useState } from "react";
+import CurrencyInput from 'react-currency-input-field';
+
 
 // ------styled-------
 const Bg = styled.div`
@@ -24,7 +26,7 @@ const AddBarWrap = styled.div`
     height: 700px; 
     border-radius: 50px;
     background-color: #fff;
-    box-shadow:0 0 20px 0px #3331;
+    box-shadow:0 0 20px 0px #3332;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -123,6 +125,21 @@ const Input = styled.input`
 const InputHalf = styled(Input)`
     width: 190px;
 `
+const CurrencyInputSt = styled(CurrencyInput)`
+    all: unset;
+    width: 190px;
+    height: 35px;
+    background-color: #fff;
+    border-radius : 50px;
+    padding-left: 12px;
+    box-sizing: border-box;
+    border: 1px solid #eee;
+    font-size: 12px;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+`
 const AddBtn = styled.button`
     all: unset;
     cursor: pointer;
@@ -216,9 +233,9 @@ const  Modal = ({list, imgFormChange, handleAddFormSubmit, handleAddFormChange, 
             <FlexWrap>
                 <InputWrap>
                     <P>가격 <span style={{color:'orangered'}}>*</span> </P>
-                    <InputHalf 
+                    <CurrencyInputSt
                     required 
-                    type="number" 
+                    // type="number" 
                     name='price' 
                     placeholder='가격'
                     onChange={handleAddFormChange}
@@ -226,9 +243,9 @@ const  Modal = ({list, imgFormChange, handleAddFormSubmit, handleAddFormChange, 
                 </InputWrap>
                 <InputWrap>
                 <P>배송비 <span style={{color:'orangered'}}>*</span> </P>
-                    <InputHalf 
+                    <CurrencyInputSt
                         required 
-                        type="number" 
+                        // type="number" 
                         name='shippingFee' 
                         placeholder='배송비'
                         onChange={handleAddFormChange}

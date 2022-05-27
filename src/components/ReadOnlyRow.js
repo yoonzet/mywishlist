@@ -88,13 +88,14 @@ const DeleteBtn = styled.div`
 
 const ReadOnlyRow = ({priceToString, stringToPrice, item, handleEditClick, handleDeleteClick}) => {
 
-  const sum = () => {
-      const price = stringToPrice(item.price)
-      const ShippingFee = stringToPrice(item.shippingFee)
+  const price = stringToPrice(item.price)
+  const ShippingFee = stringToPrice(item.shippingFee)
+  const sum = price + ShippingFee;
 
-    return price + ShippingFee
-  }
-  const totalPrice = priceToString(sum())  
+  
+  const commaPrice = priceToString(price)
+  const commaShippingFee = priceToString(ShippingFee)
+  const commaTotalPrice = priceToString(sum) 
 
   return (
     
@@ -116,10 +117,10 @@ const ReadOnlyRow = ({priceToString, stringToPrice, item, handleEditClick, handl
         <MemoWrap>{item.memo}</MemoWrap>
         <PriceWrap>
           <div>
-            <p>가격: {item.price}원</p>
-            <TxtShippingFee>(배송비: {item.shippingFee}원)</TxtShippingFee>
+            <p>가격: {commaPrice}원</p>
+            <TxtShippingFee>(배송비: {commaShippingFee}원)</TxtShippingFee>
           </div>          
-          <TxtTotal>총 {totalPrice} 원</TxtTotal>
+          <TxtTotal>총 {commaTotalPrice} 원</TxtTotal>
         </PriceWrap>
 
           <Edit 

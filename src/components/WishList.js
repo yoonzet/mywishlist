@@ -91,6 +91,8 @@ function WishList() {
     const newFormData = {...addFormData};
     newFormData[fieldName] = fieldValue;
 
+    priceToString(addFormData.price)
+
     setAddFormData(newFormData);
   }
 
