@@ -1,6 +1,6 @@
-import React, { useState, Fragment, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { nanoid } from 'nanoid';
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import styled from "styled-components";
 import ReadOnlyRow from './ReadOnlyRow';
 import EditableRow from './EditableRow';

@@ -30,6 +30,13 @@ const Input = styled.input`
     }
 `
 
+const InputDiv = styled.div`
+    display: flex;
+    white-space: nowrap;
+`
+const P = styled.p`
+    font-size: 12px;
+`
 const ImgWrap = styled.div`
     width: 150px;
     padding: 20px;
@@ -51,15 +58,11 @@ const InputFile = styled.input`
         display: none;
     }
 `
-const StoreWrap = styled.div`
+const InputWrap = styled.div`
     display: flex;
     flex-direction: column; 
 `
 const MemoWrap = styled.div`
-`
-const PriceWrap = styled.div`
-    display: flex;
-    flex-direction: column;
 `
 const BtnWrap = styled.div`
      margin-right: 20px ;
@@ -111,33 +114,42 @@ const EditableRow = ({imgFormChange, fileInput, editFormData, handleEditFormChan
                 onChange={handleEditFormChange}
             />
         </ImgWrap>
-        <StoreWrap>
-                       
-            <Input 
-                type="text" 
-                name="store" 
-                placeholder='판매처 수정'      
-                value={editFormData.store}          
-                onChange={handleEditFormChange}
-            /> 
-            <Input 
-                type="text" 
-                name="name" 
-                placeholder='상품명 수정'
-                value={editFormData.name}          
-                onChange={handleEditFormChange}
-
-            />
-
-            <Input 
-                type="text" 
-                name="storeLink" 
-                placeholder='판매처링크 수정'      
-                value={editFormData.storeLink}          
-                onChange={handleEditFormChange}
-            />
-        </StoreWrap>
+        <InputWrap>
+            <InputDiv>
+                <P>판매처</P>          
+                <Input 
+                    type="text" 
+                    name="store" 
+                    placeholder='판매처 수정'      
+                    value={editFormData.store}          
+                    onChange={handleEditFormChange}
+                    />          
+            </InputDiv>
+            <InputDiv>
+                <P>상품명</P>
+                <Input 
+                    type="text" 
+                    name="name" 
+                    placeholder='상품명 수정'
+                    value={editFormData.name}          
+                    onChange={handleEditFormChange}
+                />         
+            </InputDiv>
+            <InputDiv>
+                <P>판매링크</P>
+                <Input 
+                    type="text" 
+                    name="storeLink" 
+                    placeholder='판매처링크 수정'      
+                    value={editFormData.storeLink}          
+                    onChange={handleEditFormChange}
+                />          
+            </InputDiv>
+            
+            
+        </InputWrap>
         <MemoWrap>
+            <P>memo</P>
             <Input 
                 type="text" 
                 name="memo" 
@@ -148,21 +160,27 @@ const EditableRow = ({imgFormChange, fileInput, editFormData, handleEditFormChan
             />
         </MemoWrap>
 
-        <PriceWrap>
-            <Input 
-                name="price" 
-                type="number"            placeholder='상품가격 수정' 
-                value={editFormData.price}          
-                onChange={handleEditFormChange}
-            />       
-            <Input  
-                name="shippingFee" 
-                type="number"
-                placeholder='배송비 수정'                     
-                value={editFormData.shippingFee}          
-                onChange={handleEditFormChange}
-            />
-        </PriceWrap>
+        <InputWrap>        
+            <InputDiv>
+                <P>상품가격</P>
+                <Input 
+                    name="price" 
+                    type="number"            placeholder='상품가격 수정' 
+                    value={editFormData.price}          
+                    onChange={handleEditFormChange}
+                />     
+            </InputDiv>
+            <InputDiv>
+                <P>배송비</P>    
+                <Input  
+                    name="shippingFee" 
+                    type="number"
+                    placeholder='배송비 수정'                     
+                    value={editFormData.shippingFee}          
+                    onChange={handleEditFormChange}
+                />          
+            </InputDiv>
+        </InputWrap>
         <BtnWrap>  
              <Button       
                     type='submit'>

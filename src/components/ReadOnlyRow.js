@@ -25,6 +25,7 @@ const Img = styled.img`
   width: 150px;
   padding: 20px;
   border-radius: 30px;
+  margin-right: 10px;
 `
 
 const StoreWrap = styled.div`
@@ -43,10 +44,20 @@ const Name = styled.div`
 const ATag = styled.a`
   all: unset;
   cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+  }
 `
 const MemoWrap = styled.div`  
   margin-right: 10px;
   line-height: 25px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const P = styled.p`  
+  color: gray;
 `
 const PriceWrap = styled.div`
   display: flex;
@@ -109,13 +120,17 @@ const ReadOnlyRow = ({priceToString, stringToPrice, item, handleEditClick, handl
           {/* <Img src={item.imgURL || item.img} /> */}
         </ImgWrap>
         <StoreWrap>
-          <Store>{item.store}</Store>
+           <Store>판매처: {item.store}</Store>
           {item.storeLink === '' ?         
-         (<Name>{item.name}</Name>) :
-        (<Name><ATag href={item.storeLink}>{item.name} <IoOpenOutline/></ATag></Name>)
-        }
+            (<Name>{item.name}</Name>) :
+            (<Name><ATag href={item.storeLink}>
+              {item.name} <IoOpenOutline/>
+            </ATag></Name>)
+         }
         </StoreWrap>
-        <MemoWrap>{item.memo}</MemoWrap>
+        <MemoWrap>
+          {item.memo}
+        </MemoWrap>
         <PriceWrap>
           <div>
             <p>가격: {commaPrice}원</p>
