@@ -91,11 +91,12 @@ const ReadOnlyRow = ({priceToString, stringToPrice, item, handleEditClick, handl
   const price = stringToPrice(item.price)
   const ShippingFee = stringToPrice(item.shippingFee)
   const sum = price + ShippingFee;
-
   
   const commaPrice = priceToString(price)
   const commaShippingFee = priceToString(ShippingFee)
   const commaTotalPrice = priceToString(sum) 
+
+
 
   return (
     
