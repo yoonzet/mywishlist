@@ -25,8 +25,6 @@ React기반으로 제작된 위시리스트입니다.
 
 ##### Hooks (useSate, useRef)
 
-##### Router
-
 ##### Recoil - 리코일 라이브러리를 이용한 상태관리
 
 ##### styled-component - Css in JS 스타일링
