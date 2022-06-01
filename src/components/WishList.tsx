@@ -24,18 +24,6 @@ const Div = styled.div`
   padding: 0 20vw;
 `
 // ------component-------
-export interface IList {
-  id: string,
-  img: string,
-  imgURL:string,
-  name:string,
-  store:string,
-  storeLink:string,
-  price:string,
-  shippingFee:string,
-  memo:string
-}
-
 export interface IData {
   img: string,
   imgURL:string,
@@ -45,6 +33,11 @@ export interface IData {
   [price:string]: string | number,
   shippingFee:string | number,
   memo:string
+}
+export interface IList extends IData{
+  id: string,
+  price:string,
+  shippingFee:string,
 }
 
 function WishList() {
