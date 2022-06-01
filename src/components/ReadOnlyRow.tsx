@@ -1,9 +1,9 @@
 import styled  from "styled-components";
-import { motion, AnimatePresence } from 'framer-motion';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { MdOutlineModeEditOutline } from 
 "react-icons/md";
 import { IoOpenOutline } from "react-icons/io5";
+import { IList } from "./WishList";
 
 
 // ------styled-------
@@ -96,8 +96,20 @@ const DeleteBtn = styled.div`
 `
 
 // ------component-------
+interface Props{
+  item: IList;
+  handleEditClick: any;
+  handleDeleteClick: any;
+}
 
-const ReadOnlyRow = ({priceToString, stringToPrice, item, handleEditClick, handleDeleteClick}) => {
+const ReadOnlyRow = ({item, handleEditClick, handleDeleteClick}: Props) => {
+  
+  function priceToString(price: number | string) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+  function stringToPrice(str: string) {
+    return Number(str.replace(/,/g, ""));
+}
 
   const price = stringToPrice(item.price)
   const ShippingFee = stringToPrice(item.shippingFee)

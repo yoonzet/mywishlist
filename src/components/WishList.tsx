@@ -24,14 +24,36 @@ const Div = styled.div`
   padding: 0 20vw;
 `
 // ------component-------
+export interface IList {
+  id: string,
+  img: string,
+  imgURL:string,
+  name:string,
+  store:string,
+  storeLink:string,
+  price:string,
+  shippingFee:string,
+  memo:string
+}
+
+export interface IData {
+  img: string,
+  imgURL:string,
+  name:string,
+  store:string,
+  storeLink:string,
+  [price:string]: string | number,
+  shippingFee:string | number,
+  memo:string
+}
 
 function WishList() {
     // 천단위 콤마찍기(string타입)
-    function priceToString(price) {
+    function priceToString(price: number | string) {
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
     // 천단위 콤마없애기(number로 변환)
-    function stringToPrice(str) {
+    function stringToPrice(str:string) {
       return Number(str.replace(/,/g, ""));
   }
   
@@ -39,7 +61,9 @@ function WishList() {
   const [list, setList] = useRecoilState(listState);
   const [image, setImage] = useState("https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg");
   const fileInput = useRef(null);
-  const [addFormData, setAddFormData] = useState({
+
+  
+  const [addFormData, setAddFormData] = useState<IData>({
     img:'',
     imgURL:'',
     name:'',
@@ -50,7 +74,7 @@ function WishList() {
     memo:''
   })
 
-  const [editFormData, setEditFormData] = useState({
+  const [editFormData, setEditFormData] = useState<IData>({
     img:'',
     imgURL:'',
     name:'',
@@ -64,7 +88,7 @@ function WishList() {
   const [editListId, setEditListId] = useState(null); 
 
   // 이미지 올리기
-  const imgFormChange = (e) => {
+  const imgFormChange = (e: { target: HTMLInputElement }) => {
     let reader = new FileReader()
   
     if(e.target.files[0]) {
@@ -74,7 +98,7 @@ function WishList() {
     reader.onloadend = () => {
       const previewImgUrl = reader.result
   
-      if(previewImgUrl) {
+      if(typeof previewImgUrl === 'string') {
         setImage(previewImgUrl)
       }
     }
@@ -82,31 +106,31 @@ function WishList() {
   }
 
   
-  const handleAddFormChange = (event) => {
-    event.preventDefault();
+  const handleAddFormChange = (e:any) => {
+    e.preventDefault();
 
-    const fieldName = event.target.getAttribute('name');
-    const fieldValue = event.target.value;
+    const fieldName:string = e.target.getAttribute('name');
+    const fieldValue = e.target.value;
 
-    const newFormData = {...addFormData};
+    const newFormData:IData = {...addFormData};
     newFormData[fieldName] = fieldValue;
 
     setAddFormData(newFormData);
   }
 
-  const handleEditFormChange = (event) => {
+  const handleEditFormChange = (event: any) => {
     event.preventDefault();
 
-    const fieldName = event.target.getAttribute('name');
+    const fieldName:string = event.target.getAttribute('name');
     const fieldValue = event.target.value;
 
-    const newFormData = { ...editFormData };
+    const newFormData:IData = { ...editFormData };
     newFormData[fieldName] = fieldValue;
 
     setEditFormData(newFormData);
   }
 
-  const handleAddFormSubmit = (event) => {
+  const handleAddFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // event.preventDefault();
 
     const newWishItem = {
@@ -127,7 +151,7 @@ function WishList() {
 
   }
 
-  const handleEditFormSubmit = (e) => {
+  const handleEditFormSubmit = (e: React.FormEvent<HTMLFormElement>) =>  {
     e.preventDefault();
 
     const editedList = {
@@ -152,7 +176,7 @@ function WishList() {
     setEditListId(null);
   };
 
-  const handleEditClick = (e, item) => {
+  const handleEditClick = (e: React.FormEvent<HTMLFormElement>, item:any) => {
     e.preventDefault();
     setEditListId(item.id);
 
@@ -169,14 +193,14 @@ function WishList() {
 
     setEditFormData(formValues);
   }
-
+  
   // 수정취소버튼 
   const handleCancelClick = () => {
     setEditListId(null);
   }
  
   // 삭제버튼
-  const handleDeleteClick = (listId) => {
+  const handleDeleteClick = (listId:number) => {
     const newList = [...list];
 
     const index = list.findIndex((item)=> item.id === listId);
@@ -210,7 +234,7 @@ function WishList() {
       sumOfShippingFee: priceToString(sumOfShippingFee()),
       totalPrice: priceToString(totalPrice())
     } 
-
+console.log(list)
   return (
     <>
     <Header>My Wish List</Header>
@@ -237,12 +261,10 @@ function WishList() {
                   <AnimatePresence>            
                 {list.map((item) => (
                   <>                        
-                    {editListId === item.id ? 
-                    
-                    (               <EditableRow 
+                    {editListId === item.id ? (               
+                    <EditableRow 
                       key={item.id}
-                      image = {image}
-                      item = {item} 
+                      imgFormChange = {imgFormChange}
                       fileInput = {fileInput}
                       editFormData = {editFormData} 
                       handleEditFormChange = {handleEditFormChange}
@@ -251,12 +273,10 @@ function WishList() {
                    
                     <ReadOnlyRow 
                       key={item.id}
-                      image = {image}
                       item = {item} 
                       handleEditClick = {handleEditClick}
                       handleDeleteClick = {handleDeleteClick}
-                      priceToString = {priceToString}
-                      stringToPrice = {stringToPrice}/>
+                      />
                       )}         
                   
                   </>
@@ -268,7 +288,7 @@ function WishList() {
           </form>
        {list.length === 0 ? '' : <TotalPrice
         sum = {sum}
-        totalPrice = {totalPrice}/>} 
+        />} 
       
     </Div>
     </>

@@ -3,6 +3,7 @@ import { CgSoftwareUpload } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useState } from "react";
 import CurrencyInput from 'react-currency-input-field';
+import { IData } from "./WishList";
 
 
 // ------styled-------
@@ -156,8 +157,15 @@ const AddBtn = styled.button`
     }
 `
 // ------component-------
+interface ModalPropsType {
+    list: IData[];
+    imgFormChange: React.ChangeEventHandler<HTMLInputElement>;
+    handleAddFormSubmit: React.FormEventHandler<HTMLFormElement>;
+    handleAddFormChange: React.ChangeEventHandler<HTMLInputElement>;
+    fileInput: React.Ref<HTMLInputElement>;
+}
 
-const  Modal = ({list, imgFormChange, handleAddFormSubmit, handleAddFormChange, fileInput}) => {
+const  Modal = ({list, imgFormChange, handleAddFormSubmit, handleAddFormChange, fileInput}: ModalPropsType) => {
     const [addBar, setAddBar] = useState(false);
     const ClickShowAddBar = () => setAddBar(!addBar);  
 

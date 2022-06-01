@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { IoCheckmarkSharp, IoClose } 
 from "react-icons/io5";
 import { CgSoftwareUpload } from "react-icons/cg";
+import { IData } from './WishList';
 
 // ------styled-------
 
@@ -82,7 +83,15 @@ const Button = styled.button`
 
 // ------component-------
 
-const EditableRow = ({imgFormChange, fileInput, editFormData, handleEditFormChange, handleCancelClick}) => {
+interface PropsType {    
+    imgFormChange: React.ChangeEventHandler<HTMLInputElement>;
+    fileInput: React.Ref<HTMLInputElement>;
+    editFormData: IData;
+    handleEditFormChange: React.ChangeEventHandler<HTMLInputElement>;
+    handleCancelClick:React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const EditableRow = ({imgFormChange, fileInput, editFormData, handleEditFormChange, handleCancelClick}:PropsType) => {
   return (
     <Div>
         <ImgWrap>
@@ -165,7 +174,8 @@ const EditableRow = ({imgFormChange, fileInput, editFormData, handleEditFormChan
                 <P>상품가격</P>
                 <Input 
                     name="price" 
-                    type="number"            placeholder='상품가격 수정' 
+                    type="number"            
+                    placeholder='상품가격 수정' 
                     value={editFormData.price}          
                     onChange={handleEditFormChange}
                 />     
