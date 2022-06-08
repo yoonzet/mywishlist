@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ISum } from "./WishList";
 
 // ------styled-------
 
@@ -20,8 +21,11 @@ const TxtWrap = styled.div`
 
 
 // ------component-------
+interface PropType {
+  sum: ISum
+}
 
-const TotalPrice = ({sum}) => {
+const TotalPrice = ({sum}:PropType) => {
   return (
       <>
       <Div>

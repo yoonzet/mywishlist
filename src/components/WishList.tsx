@@ -39,6 +39,11 @@ export interface IList extends IData{
   price:string,
   shippingFee:string,
 }
+export interface ISum{
+  sumOfPrice: string,
+  sumOfShippingFee:string,
+  totalPrice:string,
+}
 
 function WishList() {
     // 천단위 콤마찍기(string타입)
@@ -82,17 +87,17 @@ function WishList() {
 
   // 이미지 올리기
   const imgFormChange = (e: { target: HTMLInputElement }) => {
-    let reader = new FileReader()
+    let reader = new FileReader();
   
     if(e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0]);
     }
   
     reader.onloadend = () => {
       const previewImgUrl = reader.result
   
       if(typeof previewImgUrl === 'string') {
-        setImage(previewImgUrl)
+        setImage(previewImgUrl);
       }
     }
 
@@ -140,7 +145,7 @@ function WishList() {
 
 
     const newList = [newWishItem, ...list,];
-    setList(newList) 
+    setList(newList);
 
   }
 
@@ -159,7 +164,7 @@ function WishList() {
       memo: editFormData.memo
     }
 
-    const newList = [...list]
+    const newList = [...list];
     
     const index = list.findIndex((item) => item.id === editListId);
 
@@ -210,7 +215,7 @@ function WishList() {
       const priceArry = list.map((item) => stringToPrice(item.price))        
       return priceArry.reduce((acc, cur)=>{
         return acc + cur;
-      }, 0)
+      }, 0);
     }
 
     const sumOfShippingFee = () => {
@@ -220,14 +225,13 @@ function WishList() {
       }, 0)
     }
     
-    const totalPrice = () => sumOfPrice() + sumOfShippingFee()
+    const totalPrice = () => sumOfPrice() + sumOfShippingFee();
 
-    const sum = {
+    const sum: ISum = {
       sumOfPrice: priceToString(sumOfPrice()),
       sumOfShippingFee: priceToString(sumOfShippingFee()),
       totalPrice: priceToString(totalPrice())
     } 
-console.log(list)
   return (
     <>
     <Header>My Wish List</Header>
