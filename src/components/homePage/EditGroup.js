@@ -1,34 +1,5 @@
 import styled from "styled-components";
-import { IoCloseCircleOutline, IoAdd } from "react-icons/io5";
-import { useState } from "react";
-
-const AddBox = styled.div`
-    width: 300px;
-    height: 100px;
-    border-radius: 12px;
-    background-color: #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    position: relative;
-    cursor: pointer;
-    transition: 0.3s;
-
-    &:hover{
-        transform: scale(102%);
-    }
-`
-const AddIcon = styled(IoAdd)`
-    font-size: 30px;
-    color: #888;
-    transition: 0.3s;
-    ${AddBox}:hover &{
-        transform: scale(1.2) rotate(90deg);
-        color: #666;
-
-    }
-`
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 const ModalBg = styled.div`
     width: 100vw;
@@ -40,10 +11,7 @@ const ModalBg = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10;
-    &.active{
-        display: none;
-    }
+    z-index: 9;
 `
 const AddGroupWrap = styled.div`
     width: 40vw;
@@ -91,25 +59,21 @@ const CloseIcon = styled(IoCloseCircleOutline)`
   }
   
 `
-
-function AddGroup( {groupAddFormChange, handleAddFormSubmit} ) {
-    const [addModal, setAddModal] = useState(false);
-    const ClickBtn = () => setAddModal(!addModal)
+function EditGroup({handleEditFormChange, editFormData, handleCancelClick,handleEditFormSubmit}) {
   return (
-      <>
-        <AddBox onClick={ClickBtn}>
-            <AddIcon/>
-        </AddBox>
-        <ModalBg className={addModal ? "" : 'active'}>
+    <>
+        <ModalBg>
             <AddGroupWrap>
-                <CloseIcon onClick={ClickBtn}/>
-                <h2>그룹만들기</h2>
-                <form onSubmit={handleAddFormSubmit}>
+                <CloseIcon onClick={handleCancelClick}/>
+                <h2>그룹 수정하기</h2>
+                <form onSubmit={handleEditFormSubmit}>
                     <InputTitle 
                         type="text" 
                         name="title"
-                        onChange={groupAddFormChange}/> 
-                    <InputSubmit type="submit" value="만들기" on/> 
+                        value={editFormData.title}          
+                        onChange={handleEditFormChange}
+                        /> 
+                    <InputSubmit type="submit" value="완료" on/> 
                 </form>
             </AddGroupWrap>
         </ModalBg>
@@ -117,4 +81,4 @@ function AddGroup( {groupAddFormChange, handleAddFormSubmit} ) {
   )
 }
 
-export default AddGroup;
+export default EditGroup;

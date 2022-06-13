@@ -253,7 +253,6 @@ function WishList() {
           list = {list}
           />        
           <form onSubmit={handleEditFormSubmit}>
-              <div>           
                 {list.map((item) => (
                   <>                        
                     {editListId === item.id ? (               
@@ -276,7 +275,6 @@ function WishList() {
                   
                   </>
                 ))} 
-              </div>            
           </form>
        {list.length === 0 ? '' : <TotalPrice
         sum = {sum}
