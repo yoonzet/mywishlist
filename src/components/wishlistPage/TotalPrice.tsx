@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ISum } from "./WishList";
+import { ISum } from "../../pages/WishList";
 
 // ------styled-------
 

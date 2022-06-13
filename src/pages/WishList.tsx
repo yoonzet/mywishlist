@@ -2,12 +2,13 @@ import React, { useState, useRef } from 'react'
 import { nanoid } from 'nanoid';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from "styled-components";
-import ReadOnlyRow from './ReadOnlyRow';
-import EditableRow from './EditableRow';
-import Modal from './Modal';
-import TotalPrice from './TotalPrice';
-import { useRecoilState } from 'recoil';
+import EditableRow from '../components/wishlistPage/EditableRow';
 import { listState } from '../Atom';
+import { useRecoilState } from 'recoil';
+import Modal from '../components/wishlistPage/Modal';
+import ReadOnlyRow from '../components/wishlistPage/ReadOnlyRow';
+import TotalPrice from '../components/wishlistPage/TotalPrice';
+import { Link } from 'react-router-dom';
 
 
 
@@ -234,7 +235,12 @@ function WishList() {
     } 
   return (
     <>
-    <Header>My Wish List</Header>
+    <Link 
+    to={'/'}
+    style={{all:'unset', cursor:'pointer'}}
+      >    
+      <Header >My Wish List</Header>
+    </Link>
 
     <Div>
         <Modal
@@ -268,7 +274,7 @@ function WishList() {
                       handleCancelClick = {handleCancelClick}/> 
                     ): (
                    
-                    <ReadOnlyRow 
+                    <ReadOnlyRow
                       key={item.id}
                       item = {item} 
                       handleEditClick = {handleEditClick}

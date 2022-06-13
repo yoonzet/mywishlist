@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { IoCheckmarkSharp, IoClose } 
 from "react-icons/io5";
 import { CgSoftwareUpload } from "react-icons/cg";
-import { IData } from './WishList';
+import { IData } from '../../pages/WishList';
 
 // ------styled-------
 

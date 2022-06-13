@@ -3,7 +3,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { MdOutlineModeEditOutline } from 
 "react-icons/md";
 import { IoOpenOutline } from "react-icons/io5";
-import { IList } from "./WishList";
+import { IList } from "../../pages/WishList";
 
 
 // ------styled-------
@@ -55,9 +55,6 @@ const MemoWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
-const P = styled.p`  
-  color: gray;
 `
 const PriceWrap = styled.div`
   display: flex;
