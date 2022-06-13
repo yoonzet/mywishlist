@@ -18,9 +18,13 @@ const localStorageEffect =
         });
     };
 
-export const listState = atom({
-    key: 'listState',
+export const wishListState = atom({
+    key: 'wishListState',
     default: [], 
-    effects: [localStorageEffect('listState')],
-
+    effects: [localStorageEffect('wishListState')],
+  });
+export const groupListState = atom({
+    key: 'groupListState',
+    default: [], 
+    effects: [localStorageEffect('groupListState')],
   });

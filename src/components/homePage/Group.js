@@ -56,7 +56,7 @@ const P = styled.p`
     }
 `
 
-function Group() {
+function Group({item}) {
   return (
     <Box>
         <IconWrap>
@@ -66,7 +66,7 @@ function Group() {
                 <P>삭제</P>
             </EditMenu>
         </IconWrap>
-        <h2>Title</h2>
+        <h2>{item.title}</h2>
     </Box>
   )
 }

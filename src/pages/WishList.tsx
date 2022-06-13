@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from "styled-components";
 import EditableRow from '../components/wishlistPage/EditableRow';
-import { listState } from '../Atom';
+import { wishListState } from '../Atom';
 import { useRecoilState } from 'recoil';
 import Modal from '../components/wishlistPage/Modal';
 import ReadOnlyRow from '../components/wishlistPage/ReadOnlyRow';
@@ -24,7 +24,7 @@ const Div = styled.div`
   gap: 10px;
   padding: 0 20vw;
 `
-// ------component-------
+// ------interface-------
 export interface IData {
   img: string,
   imgURL:string,
@@ -46,20 +46,22 @@ export interface ISum{
   totalPrice:string,
 }
 
+// ------component-------
+
 function WishList() {
-    // 천단위 콤마찍기(string타입)
-    function priceToString(price: number | string) {
-      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
-    // 천단위 콤마없애기(number로 변환)
-    function stringToPrice(str:string) {
-      return Number(str.replace(/,/g, ""));
-  }
-  
   // const [list, setList] = useState([]);
-  const [list, setList] = useRecoilState(listState);
+  const [list, setList] = useRecoilState(wishListState);
   const [image, setImage] = useState("https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg");
   const fileInput = useRef(null);
+
+  // 천단위 콤마찍기(string타입)
+  function priceToString(price: number | string) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+  // 천단위 콤마없애기(number로 변환)
+  function stringToPrice(str:string) {
+    return Number(str.replace(/,/g, ""));
+  }
 
   
   const [addFormData, setAddFormData] = useState<IData>({
@@ -243,25 +245,15 @@ function WishList() {
     </Link>
 
     <Div>
-        <Modal
-        imgFormChange = {imgFormChange}
-        handleAddFormSubmit = {handleAddFormSubmit}
-        handleAddFormChange = {handleAddFormChange}
-        fileInput = {fileInput}
-        list = {list}
-        />
-
-        
+          <Modal
+          imgFormChange = {imgFormChange}
+          handleAddFormChange = {handleAddFormChange}
+          handleAddFormSubmit = {handleAddFormSubmit}
+          fileInput = {fileInput}
+          list = {list}
+          />        
           <form onSubmit={handleEditFormSubmit}>
-              <div>
-              <motion.div 
-                      // initial={{opacity:0,scale:1}}
-                      // animate={{opacity:1,scale:1 }}
-                      // exit={{opacity:0,scale:0}}
-                      // transition={{ duration:1}}
-                      // layout
-                      >
-                  <AnimatePresence>            
+              <div>           
                 {list.map((item) => (
                   <>                        
                     {editListId === item.id ? (               
@@ -284,9 +276,6 @@ function WishList() {
                   
                   </>
                 ))} 
-                 </AnimatePresence>   
-           </motion.div> 
-                        
               </div>            
           </form>
        {list.length === 0 ? '' : <TotalPrice

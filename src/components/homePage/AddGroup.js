@@ -76,7 +76,7 @@ const CloseIcon = styled(IoCloseCircleOutline)`
   
 `
 
-function AddGroup() {
+function AddGroup( {groupAddFormChange, handleAddFormSubmit} ) {
     const [addModal, setAddModal] = useState(false);
     const ClickBtn = () => setAddModal(!addModal)
   return (
@@ -88,9 +88,12 @@ function AddGroup() {
             <AddGroupWrap>
                 <CloseIcon onClick={ClickBtn}/>
                 <h2>그룹만들기</h2>
-                <form action="">
-                    <InputTitle type="text" /> 
-                    <InputSubmit type="submit" value="만들기" /> 
+                <form onSubmit={handleAddFormSubmit}>
+                    <InputTitle 
+                        type="text" 
+                        name="title"
+                        onChange={groupAddFormChange}/> 
+                    <InputSubmit type="submit" value="만들기" on/> 
                 </form>
             </AddGroupWrap>
         </ModalBg>
