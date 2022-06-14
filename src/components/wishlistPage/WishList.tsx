@@ -1,23 +1,18 @@
 import React, { useState, useRef } from 'react'
 import { nanoid } from 'nanoid';
-import { motion, AnimatePresence } from 'framer-motion';
 import styled from "styled-components";
-import EditableRow from '../components/wishlistPage/EditableRow';
-import { wishListState } from '../Atom';
+import { groupListState, wishListState } from '../../Atom';
 import { useRecoilState } from 'recoil';
-import Modal from '../components/wishlistPage/Modal';
-import ReadOnlyRow from '../components/wishlistPage/ReadOnlyRow';
-import TotalPrice from '../components/wishlistPage/TotalPrice';
-import { Link } from 'react-router-dom';
+import Modal from './Modal';
+import ReadOnlyRow from './ReadOnlyRow';
+import TotalPrice from './TotalPrice';
+import { Link, useParams } from 'react-router-dom';
+import EditableRow from './EditableRow';
 
 
 
 // ------styled-------
 
-const Header = styled.h1`
-  text-align: center;
-  margin-top: 50px;
-`
 const Div = styled.div`
   display: flex;
   flex-direction: column;
@@ -235,14 +230,11 @@ function WishList() {
       sumOfShippingFee: priceToString(sumOfShippingFee()),
       totalPrice: priceToString(totalPrice())
     } 
+
+    console.log(list)
   return (
     <>
-    <Link 
-    to={'/'}
-    style={{all:'unset', cursor:'pointer'}}
-      >    
-      <Header >My Wish List</Header>
-    </Link>
+
 
     <Div>
           <Modal

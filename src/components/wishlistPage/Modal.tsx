@@ -3,7 +3,7 @@ import { CgSoftwareUpload } from "react-icons/cg";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useState } from "react";
 import CurrencyInput from 'react-currency-input-field';
-import { IData } from "../../pages/WishList";
+import { IData } from "./WishList";
 
 
 // ------styled-------

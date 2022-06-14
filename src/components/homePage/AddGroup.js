@@ -108,6 +108,7 @@ function AddGroup( {groupAddFormChange, handleAddFormSubmit} ) {
                     <InputTitle 
                         type="text" 
                         name="title"
+                        placeholder="그룹이름을 입력하세요"
                         onChange={groupAddFormChange}/> 
                     <InputSubmit type="submit" value="만들기" on/> 
                 </form>

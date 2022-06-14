@@ -1,21 +1,26 @@
 import { RecoilRoot } from 'recoil';
-import WishList from './pages/WishList';
 import{
   BrowserRouter,
   Routes,
   Route,
 }from "react-router-dom";
 import Home from './pages/Home';
+import Header from './components/Header';
+import WishListPage from './pages/WishListPage';
 function App() {
   return (
+    <>
     <RecoilRoot> 
       <BrowserRouter>
+      <Header/>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path='wishlist' element={<WishList/>}/>
+          <Route path='/wishlist/:groupName'element={<WishListPage/>}/>
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
+    </>
+
   );
 }
 

@@ -3,7 +3,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { MdOutlineModeEditOutline } from 
 "react-icons/md";
 import { IoOpenOutline } from "react-icons/io5";
-import { IList } from "../../pages/WishList";
+import { IList } from "./WishList";
 
 
 // ------styled-------

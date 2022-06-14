@@ -2,15 +2,16 @@ import { nanoid } from 'nanoid';
 import React, { useState } from 'react'
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { groupListState } from '../../Atom';
+import { groupListState, wishListState } from '../../Atom';
 import AddGroup from './AddGroup';
 import EditGroup from './EditGroup';
 import Group from './Group';
 
 const GroupListWrap = styled.div`
     display: grid;
+    place-items: center;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-column-gap: 2rem;
+    grid-column-gap: 1rem;
     grid-row-gap: 2.5rem;
     padding: 40px 10%;
 `
