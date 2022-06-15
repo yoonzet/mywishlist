@@ -1,11 +1,14 @@
 import { nanoid } from 'nanoid';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { groupListState, wishListState } from '../../Atom';
+import { groupListState } from '../../Atom';
 import AddGroup from './AddGroup';
 import EditGroup from './EditGroup';
 import Group from './Group';
+import axios from 'axios';
+import { useParams } from 'react-router';
+
 
 const GroupListWrap = styled.div`
     display: grid;
@@ -17,6 +20,7 @@ const GroupListWrap = styled.div`
 `
 
 function GroupList() {
+  const { id } = useParams();
     // const [groupList, setGroupList] = useState([]);
     const [groupList, setGroupList] = useRecoilState(groupListState);
 
@@ -27,6 +31,25 @@ function GroupList() {
       title:''
     })
     const [editListId, setEditListId] = useState(null); 
+
+    const axios = require('axios');
+
+    const [groupTest, setGroupTest] = useState([]);
+
+    axios.get("http://localhost:4000/groupData")
+    .then((response:any) =>  {
+    }).catch((error:any) => {
+    }).then(() => {
+    });
+
+    // useEffect(()=>{
+    //   getList()
+    // },[])
+
+    // const jsonId = groupTest.map((item)=> (
+    //   item.id
+    // ))
+    const jsonId = groupTest
 
 
 
@@ -53,9 +76,17 @@ function GroupList() {
     
     
         const newList = [newGroup, ...groupList,];
-        setGroupList(newList);    
-      }
+        setGroupList(newList); 
 
+        const group = newGroup;        
+        axios.post(`http://localhost:4000/groupData`, {
+          group
+        }).then((resp:any) => {
+            // console.log(resp);
+        }).catch((error:any) => {
+            console.log(error);
+        });
+      }
 
       //그룹이름 수정하기
       const handleEditFormChange = (event: any) => {
@@ -86,6 +117,14 @@ function GroupList() {
     
         setGroupList(newList);
         setEditListId(null);
+
+        axios.put(`http://localhost:4000/groupData/1`, {
+          editedList
+        }).then((resp:any) => {
+            console.log(resp);
+        }).catch((error:any) => {
+            console.log(error);
+        });
       };
     
       const handleEditClick = (e: React.FormEvent<HTMLFormElement>, item:any) => {
@@ -113,6 +152,13 @@ function GroupList() {
         newList.splice(index, 1);
 
         setGroupList(newList);
+
+        axios.delete(`http://localhost:4000/groupData/${id}`, {
+        }).then((resp:any) => {
+            console.log(resp);
+        }).catch((error:any) => {
+            console.log(error);
+        })         
       }
   return (
     <GroupListWrap>            
@@ -137,6 +183,7 @@ function GroupList() {
                 item={item}
                 handleDeleteClick={handleDeleteClick}
                 handleEditClick = {handleEditClick}
+                jsonId={jsonId}
                 />
 
               </>

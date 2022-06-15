@@ -44,6 +44,8 @@ export interface ISum{
 // ------component-------
 
 function WishList() {
+  const [groupList, setGroupList] = useRecoilState(groupListState);
+
   // const [list, setList] = useState([]);
   const [list, setList] = useRecoilState(wishListState);
   const [image, setImage] = useState("https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg");
@@ -57,6 +59,10 @@ function WishList() {
   function stringToPrice(str:string) {
     return Number(str.replace(/,/g, ""));
   }
+
+  const axios = require('axios');
+
+  console.log(groupList)
 
   
   const [addFormData, setAddFormData] = useState<IData>({
@@ -141,10 +147,9 @@ function WishList() {
       memo:addFormData.memo
     };
 
-
     const newList = [newWishItem, ...list,];
     setList(newList);
-
+ 
   }
 
   const handleEditFormSubmit = (e: React.FormEvent<HTMLFormElement>) =>  {

@@ -15,7 +15,7 @@ function App() {
       <Header/>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path='/wishlist/:groupName'element={<WishListPage/>}/>
+          <Route path='/wishlist/:id'element={<WishListPage/>}/>
         </Routes>
       </BrowserRouter>
     </RecoilRoot>

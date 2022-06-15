@@ -89,7 +89,7 @@ const P = styled.p`
     }
 `
 
-function Group({item, handleEditClick, handleDeleteClick}:any) {
+function Group({jsonId, item, handleEditClick, handleDeleteClick}:any) {
     const [editMenu, setEditMenu] = useState(false);
     const clickBtn = () => setEditMenu(!editMenu);
     const close = () => {
