@@ -106,14 +106,14 @@ function Group({jsonId, item, handleEditClick, handleDeleteClick}:any) {
         className={editMenu? 'active' : ''}>
     </Bg> 
         <Box>
-            <LinkSt to={`/wishlist/${item.title}`}>
-                <h2>{item.title}</h2>
+            <LinkSt to={`/wishlist/${item.id}`}>
+                <h2>{item.group.title}</h2>
             </LinkSt> 
             <IconWrap>
                     <ThreeDots onClick={clickBtn}/>
                     <EditMenu className={editMenu? 'active' : ''}>
                         <P onClick={(e)=>handleEditClick(e,item)}>수정</P>
-                        <P onClick={() => handleDeleteClick(item.id)}>삭제</P>
+                        <P onClick={() => handleDeleteClick(item.group.id)}>삭제</P>
                     </EditMenu>
             </IconWrap>
         </Box>

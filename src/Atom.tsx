@@ -19,6 +19,7 @@ const localStorageEffect =
     };
 
 export const wishListState = atom({
+
     key: 'wishListState',
     default: [], 
     effects: [localStorageEffect('wishListState')],

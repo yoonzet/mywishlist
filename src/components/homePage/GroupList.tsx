@@ -33,23 +33,29 @@ function GroupList() {
     const [editListId, setEditListId] = useState(null); 
 
     const axios = require('axios');
-
     const [groupTest, setGroupTest] = useState([]);
 
-    axios.get("http://localhost:4000/groupData")
-    .then((response:any) =>  {
+    const getList = () =>{
+      axios.get("http://localhost:4000/groupData")
+    .then((resp:any) =>  {
+      console.log(resp.data)
+      setGroupTest(resp.data)
     }).catch((error:any) => {
+      console.log('error!!')
+
     }).then(() => {
     });
+  }
 
-    // useEffect(()=>{
-    //   getList()
-    // },[])
+    useEffect(()=>{
+      getList()
+    },[])
 
-    // const jsonId = groupTest.map((item)=> (
-    //   item.id
+    
+
+    // const json = groupTest.map((item)=> (
+    //   console.log(item.group.title)
     // ))
-    const jsonId = groupTest
 
 
 
@@ -148,16 +154,19 @@ function GroupList() {
         const newList = [...groupList];
 
         const index = groupList.findIndex((item)=> item.id === listId);
+        // const index = groupTest.findIndex((item)=> item.group.id === listId);
+        const Listid = groupTest.findIndex((item)=> item.id  );
 
         newList.splice(index, 1);
 
         setGroupList(newList);
+        console.log(id)
 
         axios.delete(`http://localhost:4000/groupData/${id}`, {
         }).then((resp:any) => {
             console.log(resp);
         }).catch((error:any) => {
-            console.log(error);
+            console.log(error!!!);
         })         
       }
   return (
@@ -166,7 +175,7 @@ function GroupList() {
           groupAddFormChange={groupAddFormChange}
           handleAddFormSubmit={handleAddFormSubmit}
           />
-        {groupList.map((item) => (
+        {groupTest.map((item) => (
           <>
             {editListId === item.id ? (
               <>
@@ -183,7 +192,7 @@ function GroupList() {
                 item={item}
                 handleDeleteClick={handleDeleteClick}
                 handleEditClick = {handleEditClick}
-                jsonId={jsonId}
+                // jsonId={jsonId}
                 />
 
               </>
